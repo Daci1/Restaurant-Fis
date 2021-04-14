@@ -1,9 +1,11 @@
 package org.restaurantfis.sre;
 
+import org.restaurantfis.sre.model.RegistrationFrame;
+
 public class Main{
     public static void main(String args[])
     {
-        System.out.println("Ceeva");
+        new RegistrationFrame();
     }
 
 }
