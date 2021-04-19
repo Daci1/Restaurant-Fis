@@ -277,10 +277,13 @@ public class RegistrationFrame extends JFrame implements ActionListener {
                 tadd.setText(def);
                 tmno.setText(def);
                 res.setText(def);
+                tpass.setText(def);
+                temail.setText(def);
                 term.setSelected(false);
                 date.setSelectedIndex(0);
                 month.setSelectedIndex(0);
                 year.setSelectedIndex(0);
+
             }
         }
     }
