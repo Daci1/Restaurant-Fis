@@ -23,6 +23,8 @@ public class GUImenu extends JFrame
     private JList drinks;
     private JLabel drinks_title ;
 
+    private JButton back_button ;
+
 
 
 
@@ -118,6 +120,14 @@ public class GUImenu extends JFrame
         drinks.setBounds(550,150,200,480);
         drinks.setBackground(Color.gray);
         menu_page.add(drinks);
+
+        back_button = new JButton("BACK");
+        back_button.setVisible(true);
+        back_button.setFont(new Font("Arial", Font.PLAIN, 10));
+        back_button.setForeground(Color.black);
+        back_button.setLocation(10,10);
+        back_button.setSize(40,45);
+        menu_page.add(back_button);
         setVisible(true);
     }
 }
