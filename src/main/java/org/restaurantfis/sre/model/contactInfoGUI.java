@@ -14,6 +14,7 @@ public class contactInfoGUI extends JFrame
     private JList staff ;
     private String staff_list[] = new String[6];
     private JLabel restaurant_staff ;
+    private JButton contact_information_back_button ;
 
 
 
@@ -85,6 +86,16 @@ public class contactInfoGUI extends JFrame
         staff.setSize(200, 120);
         staff.setBorder(BorderFactory.createLineBorder(Color.black));
         contact_info_page.add(staff);
+
+
+        contact_information_back_button = new JButton("BACK");
+        contact_information_back_button.setVisible(true);
+        contact_information_back_button.setFont(new Font("Arial", Font.PLAIN, 10));
+        contact_information_back_button.setForeground(Color.black);
+        contact_information_back_button.setLocation(10,10);
+        contact_information_back_button.setSize(40,45);
+        contact_info_page.add(contact_information_back_button);
+        setVisible(true);
 
 
     setVisible(true);
