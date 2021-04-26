@@ -1,5 +1,9 @@
 package org.restaurantfis.sre.model;
 
+import org.restaurantfis.sre.exceptions.EmptyEmailException;
+import org.restaurantfis.sre.exceptions.EmptyPasswordException;
+import org.restaurantfis.sre.services.UserService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,18 +12,18 @@ import java.awt.event.ActionListener;
 public class LoginFrame extends JFrame implements ActionListener {
 
     // Components of the Form
-    private Container c;
+    private static Container c;
 
-    private JLabel title;
+    private static JLabel title;
 
-    private JLabel email;
-    private JTextField temail;
+    private static JLabel email;
+    private static JTextField temail;
 
-    private JLabel pass;
-    private JPasswordField tpass;
+    private static JLabel pass;
+    private static JPasswordField tpass;
 
-    private JButton log_in;
-    private JButton register;
+    private static JButton log_in;
+    private static JButton register;
 
     private JLabel res;
 
@@ -105,12 +109,35 @@ public class LoginFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == log_in) {
-            res.setText("Log In completed, you will be redirected.");
+
+            try{
+                checkCredentials();
+                System.out.println(UserService.validateLogin(temail.getText(), new String(tpass.getPassword()))); //make an exception(invalidCredentials)
+                res.setText("Log In completed, you will be redirected.");
+            } catch(EmptyEmailException emptyUser)
+            {
+                res.setText("Email cannot be empty.");
+            }catch (EmptyPasswordException emptyPass){
+                res.setText("Password cannot be empty.");
+            }
+
+
         }
 
         else if (e.getSource() == register) {
-//            new RegistrationFrame();
+            new RegistrationFrame();
             dispose();
         }
+    }
+
+    public static void checkCredentials() throws EmptyEmailException, EmptyPasswordException
+    {
+        if(temail.getText().equals(""))
+            throw new EmptyEmailException();
+
+        else if(new String(tpass.getPassword()).equals(""))
+            throw new EmptyPasswordException();
+
+
     }
 }
