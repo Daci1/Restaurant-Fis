@@ -42,49 +42,49 @@ public class LoginFrame extends JFrame implements ActionListener {
         c.setLayout(null);
 
         title = new JLabel("Login Form");
-        title.setFont(new Font("Arial", Font.PLAIN, 30));
-        title.setSize(300, 40);
-        title.setLocation(300, 30);
+        title.setFont(new Font("Arial", Font.BOLD, 40));
+        title.setSize(300, 50);
+        title.setLocation(370, 30);
         c.add(title);
 
         email = new JLabel("Email");
-        email.setFont(new Font("Arial", Font.PLAIN, 20));
-        email.setSize(100, 20);
-        email.setLocation(440, 100);
+        email.setFont(new Font("Arial", Font.PLAIN, 30));
+        email.setSize(100, 30);
+        email.setLocation(280, 140);
         c.add(email);
 
         temail = new JTextField();
-        temail.setFont(new Font("Arial", Font.PLAIN, 15));
-        temail.setSize(190, 20);
-        temail.setLocation(540, 100);
+        temail.setFont(new Font("Arial", Font.PLAIN, 25));
+        temail.setSize(250, 30);
+        temail.setLocation(380, 140);
         temail.setBorder(null);
         c.add(temail);
 
         pass = new JLabel("Password");
-        pass.setFont(new Font("Arial", Font.PLAIN, 20));
-        pass.setSize(100, 20);
-        pass.setLocation(100, 150);
+        pass.setFont(new Font("Arial", Font.PLAIN, 30));
+        pass.setSize(150, 30);
+        pass.setLocation(225, 190);
         c.add(pass);
 
         tpass = new JPasswordField();
-        tpass.setFont(new Font("Arial", Font.PLAIN, 15));
-        tpass.setSize(190, 20);
-        tpass.setLocation(200, 150);
+        tpass.setFont(new Font("Arial", Font.PLAIN, 25));
+        tpass.setSize(250, 30);
+        tpass.setLocation(380, 190);
         tpass.setBorder(null);
         c.add(tpass);
 
         log_in = new JButton("Log In");
-        log_in.setFont(new Font("Arial", Font.PLAIN, 15));
-        log_in.setSize(100, 20);
-        log_in.setLocation(150, 450);
+        log_in.setFont(new Font("Arial", Font.PLAIN, 25));
+        log_in.setSize(200, 40);
+        log_in.setLocation(220, 340);
         log_in.addActionListener(this);
         log_in.setFocusable(false);
         c.add(log_in);
 
         register = new JButton("Register");
-        register.setFont(new Font("Arial", Font.PLAIN, 15));
-        register.setSize(100, 20);
-        register.setLocation(270, 450);
+        register.setFont(new Font("Arial", Font.PLAIN, 25));
+        register.setSize(200, 40);
+        register.setLocation(460, 340);
         register.addActionListener(this);
         register.setFocusable(false);
         c.add(register);
@@ -109,7 +109,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         }
 
         else if (e.getSource() == register) {
-            new RegistrationFrame();
+//            new RegistrationFrame();
             dispose();
         }
     }
