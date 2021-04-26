@@ -251,13 +251,6 @@ public class RegistrationFrame extends JFrame implements ActionListener {
             res.setLocation(100, 500);
             c.add(res);
 
-            //Locatia din dreapta
-//            resadd = new JTextArea();
-//            resadd.setFont(new Font("Arial", Font.PLAIN, 15));
-//            resadd.setSize(200, 75);
-//            resadd.setLocation(580, 175);
-//            resadd.setLineWrap(true);
-//            c.add(resadd);
 
             setVisible(true);
         }
@@ -298,8 +291,6 @@ public class RegistrationFrame extends JFrame implements ActionListener {
                     {
                         System.out.println(UserServiceException);
                     }
-
-                    UserService.printCollection();
 
                 }
                 else {

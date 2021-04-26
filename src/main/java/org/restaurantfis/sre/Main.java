@@ -14,19 +14,7 @@ public class Main{
     public static void main(String args[])
     {
         UserService.initializeDB();
-        UserService.dropDB();
-//        UserService.addUser("admin", "admin@ceva", "adminpass", "07", "SuperMegaStraight", new Date(1,2,3), "Acasa");
-//        try
-//        {
-//            UserService.checkExistingUser("admin");
-//        }
-//        catch(Exception e) {
-//            System.out.println(e);
-//        }
 
-        new RegistrationFrame();
-
-        UserService.printCollection();
 
     }
 
