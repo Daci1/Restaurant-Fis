@@ -60,6 +60,7 @@ public class UserService {
         while(cursor.hasNext())
         {
             System.out.println(cursor.next());
+            System.out.println();
         }
     }
 
@@ -73,6 +74,18 @@ public class UserService {
         byte[] decodedBytes = Base64.getDecoder().decode(encodedPassword);
         String decodedPassword = new String(decodedBytes);
         return decodedPassword;
+    }
+
+
+    public static boolean validateLogin(String email, String password){
+
+        DBObject query = new BasicDBObject("email", email);
+        query.put("password", UserService.encodePassword(password));
+        DBCursor cursor = users_collection.find(query);
+
+        if(cursor.one() != null)
+            return true;
+        else return false;
     }
 
     public static void dropDB()
