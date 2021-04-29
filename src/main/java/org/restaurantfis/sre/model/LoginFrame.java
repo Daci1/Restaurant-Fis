@@ -2,6 +2,7 @@ package org.restaurantfis.sre.model;
 
 import org.restaurantfis.sre.exceptions.EmptyEmailException;
 import org.restaurantfis.sre.exceptions.EmptyPasswordException;
+import org.restaurantfis.sre.exceptions.InvalidLoginCredentialsException;
 import org.restaurantfis.sre.services.UserService;
 
 import javax.swing.*;
@@ -30,10 +31,6 @@ public class LoginFrame extends JFrame implements ActionListener {
     // constructor, to initialize the components
     // with default values.
 
-    public static void main(String args[])
-    {
-        new LoginFrame();
-    }
     public LoginFrame()
     {
         setTitle("Login Form");
@@ -112,13 +109,13 @@ public class LoginFrame extends JFrame implements ActionListener {
 
             try{
                 checkCredentials();
-                System.out.println(UserService.validateLogin(temail.getText(), new String(tpass.getPassword()))); //make an exception(invalidCredentials)
                 res.setText("Log In completed, you will be redirected.");
-            } catch(EmptyEmailException emptyUser)
-            {
+            }catch(EmptyEmailException emptyUser) {
                 res.setText("Email cannot be empty.");
             }catch (EmptyPasswordException emptyPass){
                 res.setText("Password cannot be empty.");
+            }catch(InvalidLoginCredentialsException invalidLogin){
+                res.setText("Login credentials are invalid.");
             }
 
 
@@ -130,14 +127,15 @@ public class LoginFrame extends JFrame implements ActionListener {
         }
     }
 
-    public static void checkCredentials() throws EmptyEmailException, EmptyPasswordException
-    {
+    public static void checkCredentials() throws EmptyEmailException, EmptyPasswordException, InvalidLoginCredentialsException {
         if(temail.getText().equals(""))
             throw new EmptyEmailException();
 
         else if(new String(tpass.getPassword()).equals(""))
             throw new EmptyPasswordException();
 
+        else if(!UserService.validateLogin(temail.getText(), new String(tpass.getPassword())))
+            throw new InvalidLoginCredentialsException();
 
     }
 }
