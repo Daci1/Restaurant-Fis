@@ -76,6 +76,7 @@ public class UserService {
         return decodedPassword;
     }
 
+
     public static boolean validateLogin(String email, String password){
 
         DBObject query = new BasicDBObject("email", email);
