@@ -10,6 +10,7 @@ public class UserService {
     private static MongoClient mongoClient;
     private static DB database;
     private static DBCollection users_collection;
+    private static boolean isLogged = false;
 
     public static void initializeDB()
     {
@@ -91,5 +92,13 @@ public class UserService {
     public static void dropDB()
     {
         users_collection.drop();
+    }
+
+    public static boolean isLogged(){
+        return UserService.isLogged;
+    }
+
+    public static void setIsLogged(Boolean isLogged){
+        UserService.isLogged = isLogged;
     }
 }

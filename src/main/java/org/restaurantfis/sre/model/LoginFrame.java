@@ -35,7 +35,7 @@ public class LoginFrame extends JFrame implements ActionListener {
     {
         setTitle("Login Form");
         setBounds(300, 90, 900, 600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
         c = getContentPane();

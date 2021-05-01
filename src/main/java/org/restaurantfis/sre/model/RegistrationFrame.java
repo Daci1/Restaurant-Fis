@@ -83,7 +83,7 @@ public class RegistrationFrame extends JFrame implements ActionListener {
         {
             setTitle("Registration Form");
             setBounds(300, 90, 900, 600);
-            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             setResizable(false);
 
             c = getContentPane();
