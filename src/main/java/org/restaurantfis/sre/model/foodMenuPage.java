@@ -17,11 +17,14 @@ public class foodMenuPage extends JFrame implements ActionListener
     private JTable menu ;
 
     private Object[] columns = {"FOOD","FOOD PRICE","DRINKS","DRINKS PRICE"};
+    private Object[] row = new Object[4];
     private DefaultTableModel model;
     private JScrollPane pane ;
 
     private JTextField food,food_price,drinks,drinks_price;
     private JButton add_button, delete_button, save_button, edit_button, back_button;
+
+    private ActionListener add_action, delete_action, save_action;
 
 
     public foodMenuPage()
@@ -41,7 +44,8 @@ public class foodMenuPage extends JFrame implements ActionListener
         page_title.setLocation(250, 30);
         menu_page.add(page_title);
         //tabel
-        model = new DefaultTableModel(columns,4);
+        model = new DefaultTableModel();
+        model.setColumnIdentifiers(columns);
         menu = new JTable(model);
 
         pane = new JScrollPane(menu);
@@ -58,7 +62,11 @@ public class foodMenuPage extends JFrame implements ActionListener
         edit_button.addActionListener(this);
         menu_page.add(edit_button);
 
-        
+        //back button
+        back_button = new JButton("BACK");
+        back_button.setFont(new Font("Arial", Font.PLAIN,15));
+        back_button.setBounds(130,30, 75,50);
+        menu_page.add(back_button);
 
 
 
@@ -85,7 +93,9 @@ public class foodMenuPage extends JFrame implements ActionListener
 
         //edit buttons
         add_button = new JButton("ADD");
+        add_button.addActionListener(this);
         delete_button = new JButton("DELETE");
+        delete_button.addActionListener(this);
         save_button = new JButton("SAVE");
 
         add_button.setBounds(50,100,60,30);
@@ -98,6 +108,8 @@ public class foodMenuPage extends JFrame implements ActionListener
         menu_page.add(add_button);
         menu_page.add(delete_button);
         menu_page.add(save_button);
+
+
 
 
 
@@ -122,6 +134,24 @@ public class foodMenuPage extends JFrame implements ActionListener
             add_button.setVisible(true);
             delete_button.setVisible(true);
             save_button.setVisible(true);
+        }
+
+        else if(e.getActionCommand().equals("ADD"))
+        {
+            row[0] = food.getText();
+            row[1] = food_price.getText();
+            row[2] = drinks.getText();
+            row[3] = drinks_price.getText();
+            model.addRow(row);
+        }
+        else if(e.getActionCommand().equals("DELETE"))
+        {
+            int i = menu.getSelectedRow();
+            if(i >= 0)
+            {
+                model.removeRow(i);
+            }
+
         }
 
     }
