@@ -7,6 +7,7 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 
 public class foodMenuPage extends JFrame implements ActionListener
@@ -47,6 +48,7 @@ public class foodMenuPage extends JFrame implements ActionListener
         model = new DefaultTableModel();
         model.setColumnIdentifiers(columns);
         menu = new JTable(model);
+        ImportdataFromfiles();
 
         pane = new JScrollPane(menu);
         pane.setBounds(175, 200,550,200);
@@ -97,6 +99,7 @@ public class foodMenuPage extends JFrame implements ActionListener
         delete_button = new JButton("DELETE");
         delete_button.addActionListener(this);
         save_button = new JButton("SAVE");
+        save_button.addActionListener(this);
 
         add_button.setBounds(50,100,60,30);
         delete_button.setBounds(50,135,80,30);
@@ -108,13 +111,7 @@ public class foodMenuPage extends JFrame implements ActionListener
         menu_page.add(add_button);
         menu_page.add(delete_button);
         menu_page.add(save_button);
-
-
-
-
-
-
-
+        
 
         setVisible(true);
 
@@ -122,10 +119,8 @@ public class foodMenuPage extends JFrame implements ActionListener
     }
 
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        if(e.getActionCommand().equals("EDIT"))
-        {
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("EDIT")) {
             food.setVisible(true);
             food_price.setVisible(true);
             drinks_price.setVisible(true);
@@ -134,31 +129,67 @@ public class foodMenuPage extends JFrame implements ActionListener
             add_button.setVisible(true);
             delete_button.setVisible(true);
             save_button.setVisible(true);
-        }
-
-        else if(e.getActionCommand().equals("ADD"))
-        {
+        } else if (e.getActionCommand().equals("ADD")) {
             row[0] = food.getText();
             row[1] = food_price.getText();
             row[2] = drinks.getText();
             row[3] = drinks_price.getText();
             model.addRow(row);
-        }
-        else if(e.getActionCommand().equals("DELETE"))
-        {
+        } else if (e.getActionCommand().equals("DELETE")) {
             int i = menu.getSelectedRow();
-            if(i >= 0)
-            {
+            if (i >= 0) {
                 model.removeRow(i);
             }
+        } else {
+            String filePath = "src/main/java/org/restaurantfis/sre/model/menuModificationstorage.txt";
+            File file = new File(filePath);
 
+            try {
+                FileWriter fw = new FileWriter(file);
+                BufferedWriter bw = new BufferedWriter(fw);
+
+
+                for (int i = 0; i < menu.getRowCount(); i++) {//rows
+                    for (int j = 0; j < menu.getColumnCount(); j++) {//columns
+                        bw.write(menu.getValueAt(i, j).toString() + " ");
+                    }
+                    bw.newLine();
+                }
+
+                bw.close();
+                fw.close();
+
+                bw.close();
+                fw.close();
+            } catch (IOException ex) {
+                System.out.println("something went wrong");
+            }
         }
+    }
+
+        public void ImportdataFromfiles()
+        {
+           String filePath = "src/main/java/org/restaurantfis/sre/model/menuModificationstorage.txt";
+           File file = new File(filePath);
+            try {
+                FileReader fr = new FileReader(file);
+                BufferedReader br = new BufferedReader(fr);
+
+                DefaultTableModel model = (DefaultTableModel)menu.getModel();
+                Object[] lines = br.lines().toArray();
+
+                for(int i = 0; i < lines.length; i++){
+                    String[] row = lines[i].toString().split(" ");
+                    model.addRow(row);
+                }
+
+            } catch (FileNotFoundException ex)
+            {
+                System.out.println("something went wrong");
+            }
+            }
+
+
 
     }
 
-
-
-
-
-
-}
