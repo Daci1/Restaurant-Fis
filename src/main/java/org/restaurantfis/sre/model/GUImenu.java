@@ -1,133 +1,86 @@
 package org.restaurantfis.sre.model;
 import javax.swing.*;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 
-public class GUImenu extends JFrame
-{
+public class GUImenu extends JFrame implements ActionListener {
+    private JLabel page_title;
+    private Container menu_page;
+    private JTable menu;
+    private Object[] columns = {"FOOD", "FOOD PRICE", "DRINKS", "DRINKS PRICE"};
+    private Object[] row = new Object[4];
+    private DefaultTableModel model;
+    private JScrollPane pane;
+    private JButton  back_button;
 
-    private Container menu_page ;
-    private JLabel title ;
-
-    private String pizza_list[] = new String[8] ;
-    private JList pizza ;
-    private JLabel pizza_title ;
-
-    private String pasta_list[] = new String[5];
-    private JList pasta ;
-    private JLabel pasta_title ;
-
-    private String drinks_list[] = new String[15];
-    private JList drinks;
-    private JLabel drinks_title ;
-
-    private JButton back_button ;
-
-
-
-
-
-    public GUImenu()
-    {
+    public GUImenu() {
         setTitle("Restaurant Food Menu");
         setBounds(300, 90, 900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-
         menu_page = getContentPane();
         menu_page.setBackground(Color.gray);
         menu_page.setLayout(null);
 
-        title = new JLabel("Restaurant Food Menu");
-        title.setFont(new Font("Arial", Font.PLAIN, 30));
-        title.setSize(500, 40);
-        title.setLocation(300, 30);
-        title.setForeground(Color.black);
-        menu_page.add(title);
+        //titlul
+        page_title = new JLabel("Restaurant Food Menu");
+        page_title.setFont(new Font("Arial", Font.BOLD, 40));
+        page_title.setSize(500, 50);
+        page_title.setLocation(250, 30);
+        menu_page.add(page_title);
+        //tabel
+        model = new DefaultTableModel();
+        model.setColumnIdentifiers(columns);
+        menu = new JTable(model);
+        menu.setEnabled(false);
+        ImportdataFromfiles();
 
-        pizza_title = new JLabel("PIZZA");
-        pizza_title.setFont(new Font("Arial", Font.PLAIN, 25));
-        pizza_title.setSize(300, 40);
-        pizza_title.setLocation(80, 100);
-        menu_page.add(pizza_title);
+        pane = new JScrollPane(menu);
+        pane.setBounds(175, 200, 550, 200);
+        menu_page.add(pane);
 
-        pizza_list[0] = "1.Pepperoni Pizza......10$";
-        pizza_list[1] = "2.Meat Pizza..............12$";
-        pizza_list[2] = "3.Margherita Pizza.....11$";
-        pizza_list[3] = "4.Hawaiian Pizza....10.5$";
-        pizza_list[4] = "5.Buffalo Pizza...........20$";
-        pizza_list[5] = "6.Supreme Pizza..........4$";
-        pizza_list[6] = "7.Cheese Pizza..........14$";
-        pizza_list[7] = "8.Veggie Pizza...........30$";
-
-        pizza = new JList(pizza_list);
-        pizza.setVisibleRowCount(8);
-        pizza.setFont(new Font("Arial", Font.PLAIN, 15));
-        pizza.setSize(100,20);
-        pizza.setBounds(40,150,180,160);
-        pizza.setBackground(Color.gray);
-        menu_page.add(pizza);
-
-        pasta_title = new JLabel("PASTA");
-        pasta_title.setFont(new Font("Arial", Font.PLAIN, 25));
-        pasta_title.setSize(300, 40);
-        pasta_title.setLocation(80, 325);
-        menu_page.add(pasta_title);
-
-        pasta_list[0] = "1.Pasta Con Pomodoro....12$";
-        pasta_list[1] = "2.Raviolli...........................14$";
-        pasta_list[2] = "3.Spagetti Bolognese.........9$";
-        pasta_list[3] = "4.Lasagna......................18.5$";
-        pasta_list[4] = "5.Penne Ala Vodka...........16$";
-
-
-        pasta = new JList(pasta_list);
-        pasta.setVisibleRowCount(5);
-        pasta.setFont(new Font("Arial", Font.PLAIN, 15));
-        pasta.setSize(100,20);
-        pasta.setBounds(40,375,200,160);
-        pasta.setBackground(Color.gray);
-        menu_page.add(pasta);
-
-        drinks_title = new JLabel("Soft & Alcoholic Drinks");
-        drinks_title.setFont(new Font("Arial", Font.PLAIN, 25));
-        drinks_title.setSize(300, 40);
-        drinks_title.setLocation(500, 100);
-        menu_page.add(drinks_title);
-
-        drinks_list[0] ="1.Coca-Cola...................2$";
-        drinks_list[1] ="2.Pepsi........................2.5$";
-        drinks_list[2] ="3.Sprite...........................3$";
-        drinks_list[3] ="4.Water...........................1$";
-        drinks_list[4] ="5.Sparkling Water........1.5$";
-        drinks_list[5] ="6.RedBull........................5$";
-        drinks_list[6] ="7.Hell...............................4$";
-        drinks_list[7] ="8.Tuica..........................10$";
-        drinks_list[8] ="9.Mona............................9$";
-        drinks_list[9] ="10.Vodka.......................15$";
-        drinks_list[10] ="11.Saniuta.......................6$";
-        drinks_list[11] ="12.Bere............................7$";
-        drinks_list[12] ="13.Gin..............................8$";
-        drinks_list[13] ="14.Drobeta.....................16$";
-        drinks_list[14] ="15.Bourbon.....................20$";
-
-        drinks = new JList(drinks_list);
-        drinks.setVisibleRowCount(15);
-        drinks.setFont(new Font("Arial", Font.PLAIN, 15));
-        drinks.setSize(100,20);
-        drinks.setBounds(550,150,200,480);
-        drinks.setBackground(Color.gray);
-        menu_page.add(drinks);
-
+        //back button
         back_button = new JButton("BACK");
-        back_button.setVisible(true);
-        back_button.setFont(new Font("Arial", Font.PLAIN, 10));
-        back_button.setForeground(Color.black);
-        back_button.setLocation(10,10);
-        back_button.setSize(40,45);
+        back_button.setFont(new Font("Arial", Font.PLAIN, 15));
+        back_button.setBounds(50, 30, 75, 50);
         menu_page.add(back_button);
+
         setVisible(true);
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+    public void ImportdataFromfiles()
+    {
+        String filePath = "src/main/java/org/restaurantfis/sre/model/menuModificationstorage.txt";
+        File file = new File(filePath);
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+
+            DefaultTableModel model = (DefaultTableModel)menu.getModel();
+            Object[] lines = br.lines().toArray();
+
+            for(int i = 0; i < lines.length; i++){
+                String[] row = lines[i].toString().split(" ");
+                model.addRow(row);
+            }
+
+        } catch (FileNotFoundException ex)
+        {
+            System.out.println("something went wrong");
+        }
+    }
+
 }
+
+
