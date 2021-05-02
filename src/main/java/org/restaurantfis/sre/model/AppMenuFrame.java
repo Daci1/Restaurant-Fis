@@ -26,13 +26,19 @@ public class AppMenuFrame extends JFrame implements ActionListener {
         setResizable(false);
 
         c = getContentPane();
-        c.setBackground(Color.GRAY);
+        c.setBackground(new Color(0,82,33));
         c.setLayout(null);
 
         JPanel menuPanel = new JPanel();
         menuPanel.setBackground(Color.black);
         menuPanel.setBounds(0,50,1200,3);
         c.add(menuPanel);
+
+        JPanel whiteMenuPanel = new JPanel();
+        whiteMenuPanel.setBackground(Color.white);
+        whiteMenuPanel.setBounds(400,0,1200,49);
+        c.add(whiteMenuPanel);
+
 
         registerButton = new JButton();
         this.configButton(registerButton, "Register", 0);
@@ -75,7 +81,7 @@ public class AppMenuFrame extends JFrame implements ActionListener {
 
     public void configTableButton(JButton b, int xPos, int yPos){
 
-        ImageIcon tableIcon = new ImageIcon("src/main/java/photos/restaurantTable.jpg");
+        ImageIcon tableIcon = new ImageIcon("src/main/java/photos/restaurantTable.png");
         b.setBounds(xPos,yPos,150,150);
         b.setFocusable(false);
         b.setIcon(tableIcon);
