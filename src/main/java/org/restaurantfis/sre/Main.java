@@ -1,7 +1,4 @@
 package org.restaurantfis.sre;
-
-
-
 import org.restaurantfis.sre.model.LoginFrame;
 import com.mongodb.*;
 import org.restaurantfis.sre.model.Date;
@@ -15,6 +12,7 @@ public class Main{
 
     public static void main(String args[])
     {
+
         UserService.initializeDB();
         new LoginFrame();
 
