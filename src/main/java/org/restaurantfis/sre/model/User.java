@@ -13,6 +13,7 @@ public class User
     private String address;
     private boolean isAdmin;
 
+
     public User(String name, String email, String password, String mobile, String gender, Date DOB, String address, boolean isAdmin) {
         this.name = name;
         this.email = email;
@@ -103,5 +104,17 @@ public class User
         return isAdmin;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", gender='" + gender + '\'' +
+                ", DOB=" + DOB +
+                ", address='" + address + '\'' +
+                ", isAdmin=" + isAdmin +
+                '}';
+    }
 }

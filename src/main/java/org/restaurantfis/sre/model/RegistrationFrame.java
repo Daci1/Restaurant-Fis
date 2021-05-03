@@ -79,6 +79,7 @@ public class RegistrationFrame extends JFrame implements ActionListener {
 
         // constructor, to initialize the components
         // with default values.
+
         public RegistrationFrame()
         {
             setTitle("Registration Form");

@@ -110,6 +110,8 @@ public class LoginFrame extends JFrame implements ActionListener {
             try{
                 checkCredentials();
                 res.setText("Log In completed, you will be redirected.");
+                AppMenuFrame.restructureAfterLogin();
+                this.dispose();
             }catch(EmptyEmailException emptyUser) {
                 res.setText("Email cannot be empty.");
             }catch (EmptyPasswordException emptyPass){

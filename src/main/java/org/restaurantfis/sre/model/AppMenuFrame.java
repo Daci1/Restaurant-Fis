@@ -1,5 +1,7 @@
 package org.restaurantfis.sre.model;
 
+import org.restaurantfis.sre.services.UserService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +17,7 @@ public class AppMenuFrame extends JFrame implements ActionListener {
     private static JButton loginButton;
     private static JButton contactButton;
     private static JButton menuButton;
+    private static JButton logOutButton;
 
     private static JButton[] tableButtons;
 
@@ -29,16 +32,14 @@ public class AppMenuFrame extends JFrame implements ActionListener {
         c.setBackground(new Color(0,82,33));
         c.setLayout(null);
 
-        JPanel menuPanel = new JPanel();
-        menuPanel.setBackground(Color.black);
-        menuPanel.setBounds(0,50,1200,3);
-        c.add(menuPanel);
+        JPanel menuBlackPanel = new JPanel();
+        menuBlackPanel.setBackground(Color.black);
+        menuBlackPanel.setBounds(0,50,1200,3);
+        c.add(menuBlackPanel);
 
-        JPanel whiteMenuPanel = new JPanel();
-        whiteMenuPanel.setBackground(Color.white);
-        whiteMenuPanel.setBounds(400,0,1200,49);
-        c.add(whiteMenuPanel);
-
+        logOutButton = new JButton();
+        this.configButton(logOutButton, "Log Out", 1084);
+        logOutButton.setVisible(false);
 
         registerButton = new JButton();
         this.configButton(registerButton, "Register", 0);
@@ -46,11 +47,17 @@ public class AppMenuFrame extends JFrame implements ActionListener {
         loginButton = new JButton();
         this.configButton(loginButton, "Login", 100);
 
-        contactButton = new JButton();
-        this.configButton(contactButton, "Contact", 200);
-
         menuButton = new JButton();
-        this.configButton(menuButton, "Menu", 300);
+        this.configButton(menuButton, "Menu", 200);
+
+        contactButton = new JButton();
+        this.configButton(contactButton, "Contact", 300);
+
+        JPanel menuWhitePanel = new JPanel();
+        menuWhitePanel.setBackground(Color.white);
+        menuWhitePanel.setBounds(0,0,1200,49);
+        c.add(menuWhitePanel);
+
 
         tableButtons = new JButton[6];
 
@@ -81,8 +88,9 @@ public class AppMenuFrame extends JFrame implements ActionListener {
 
     public void configTableButton(JButton b, int xPos, int yPos){
 
-        ImageIcon tableIcon = new ImageIcon("src/main/java/photos/restaurantTable.png");
+        ImageIcon tableIcon = new ImageIcon("src/main/resources/photos/restaurantTab.png");
         b.setBounds(xPos,yPos,150,150);
+        b.setBackground(new Color(0,82,33));
         b.setFocusable(false);
         b.setIcon(tableIcon);
         b.addActionListener(this);
@@ -103,19 +111,51 @@ public class AppMenuFrame extends JFrame implements ActionListener {
         }
 
         if(e.getSource() == contactButton){
-            System.out.println("TODO: Contact");
+            new contactInfoGUI();
         }
 
         if(e.getSource() == menuButton){
             System.out.println("TODO: Menu");
         }
 
+        if(e.getSource() == logOutButton){
+            UserService.setIsLogged(false);
+            UserService.loggedUser = null;
+            dispose();
+            new AppMenuFrame();
+        }
+
         for(int i = 0; i < 6; i++){ //Just for testing
             if(e.getSource() == tableButtons[i]){
-                System.out.println(i);
-                break;
+                if(!UserService.isLogged()){
+                    JOptionPane.showMessageDialog(null, "You need to log in first!", "Warning!", JOptionPane.WARNING_MESSAGE);
+                }
+                else{
+                    new ReservationFrame(i);
+                }
             }
         }
+
+
+    }
+
+    public static void restructureAfterLogin(){
+        registerButton.setVisible(false);
+        loginButton.setVisible(false);
+        logOutButton.setVisible(true);
+
+        menuButton.setText("Menu");
+        menuButton.setFont(new Font("Arial", Font.PLAIN, 15));
+        menuButton.setSize(100, 50);
+        menuButton.setLocation(0, 0);
+        menuButton.setFocusable(false);
+
+        contactButton.setText("Contact");
+        contactButton.setFont(new Font("Arial", Font.PLAIN, 15));
+        contactButton.setSize(100, 50);
+        contactButton.setLocation(100, 0);
+        contactButton.setFocusable(false);
+
 
 
     }
