@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class ReservationFrame extends JFrame implements ActionListener {
 
@@ -26,6 +25,10 @@ public class ReservationFrame extends JFrame implements ActionListener {
     private LocalDate currentDate;
 
     private int currentMonthIndex;
+
+    private JLabel[] reservedLabels;
+
+    private JButton[] deleteReservationButtons;
 
     private String dates[]
             = { "1", "2", "3", "4", "5",
@@ -78,24 +81,14 @@ public class ReservationFrame extends JFrame implements ActionListener {
         setButtons(reservationButtons[5], 661, 427);
 
         timeIntervals = new JLabel[6];
+        for(int i = 0; i < 6; i++) timeIntervals[i] = new JLabel();
 
-        timeIntervals[0] = new JLabel("08AM-10AM");
-        setTimeLabels(timeIntervals[0], 50, 161);
-
-        timeIntervals[1] = new JLabel("02PM-04PM");
-        setTimeLabels(timeIntervals[1], 453, 161);
-
-        timeIntervals[2] = new JLabel("10AM-12AM");
-        setTimeLabels(timeIntervals[2], 50, 316);
-
-        timeIntervals[3] = new JLabel("04PM-06PM");
-        setTimeLabels(timeIntervals[3], 453, 316);
-
-        timeIntervals[4] = new JLabel("12AM-02PM");
-        setTimeLabels(timeIntervals[4], 50, 466);
-
-        timeIntervals[5] = new JLabel("06PM-08PM");
-        setTimeLabels(timeIntervals[5], 453, 466);
+        setTimeLabels(timeIntervals[0], "08AM-10AM", 50, 161);
+        setTimeLabels(timeIntervals[1], "02PM-04PM", 453, 161);
+        setTimeLabels(timeIntervals[2], "10AM-12AM", 50, 316);
+        setTimeLabels(timeIntervals[3], "04PM-06PM", 453, 316);
+        setTimeLabels(timeIntervals[4], "12AM-02PM", 50, 466);
+        setTimeLabels(timeIntervals[5], "06PM-08PM", 453, 466);
 
         currentDate = LocalDate.now();
         currentMonthIndex = currentDate.getMonthValue() - 1;
@@ -111,11 +104,35 @@ public class ReservationFrame extends JFrame implements ActionListener {
         reservationDate.setFont(new Font("Arial", Font.PLAIN, 20));
         reservationDate.setSize(60, 30);
         reservationDate.setLocation(420, 42);
-        reservationDate.addActionListener(this);
         reservationDate.setSelectedIndex(currentDate.getDayOfMonth() - 1);
+        reservationDate.addActionListener(this);
         c.add(reservationDate);
 
+        reservedLabels = new JLabel[6];
+        for(int i = 0; i < 6; i++) reservedLabels[i] = new JLabel("Reserved");
+        enableReservedLabel(reservedLabels[0], 247, 123);
+        enableReservedLabel(reservedLabels[1], 640, 123);
+        enableReservedLabel(reservedLabels[2], 247, 278);
+        enableReservedLabel(reservedLabels[3], 640, 278);
+        enableReservedLabel(reservedLabels[4], 247, 428);
+        enableReservedLabel(reservedLabels[5], 640, 428);
+
+        deleteReservationButtons = new JButton[6];
+        for(int i = 0; i < 6; i++) deleteReservationButtons[i] = new JButton();
+
+        setDeleteButtons(deleteReservationButtons[0], 280,180);
+        setDeleteButtons(deleteReservationButtons[1], 673,180);
+        setDeleteButtons(deleteReservationButtons[2], 280,335);
+        setDeleteButtons(deleteReservationButtons[3], 673,335);
+        setDeleteButtons(deleteReservationButtons[4], 280,485);
+        setDeleteButtons(deleteReservationButtons[5], 673,485);
+
+
+
+
+
         updateButtons();
+
         setVisible(true);
     }
 
@@ -138,7 +155,8 @@ public class ReservationFrame extends JFrame implements ActionListener {
         c.add(button);
     }
 
-    private void setTimeLabels(JLabel label, int xPos, int yPos){
+    private void setTimeLabels(JLabel label, String text, int xPos, int yPos){
+        label.setText(text);
         label.setFont(new Font("Arial", Font.PLAIN, 30));
         label.setForeground(Color.black);
         label.setSize(200, 30);
@@ -157,9 +175,23 @@ public class ReservationFrame extends JFrame implements ActionListener {
                     timeIntervals[i].getText(),
                     reservationDate.getSelectedIndex() + 1,
                     currentMonthIndex + 1)){
-                reservationButtons[i].setEnabled(false);
+                reservationButtons[i].setVisible(false);
+                reservedLabels[i].setVisible(true);
+            }
+            else{
+                reservationButtons[i].setVisible(true);
+                reservedLabels[i].setVisible(false);
             }
         }
+    }
+
+    private void enableReservedLabel(JLabel label, int xPos, int yPos){
+        label.setFont(new Font("Arial", Font.PLAIN, 25));
+        label.setForeground(Color.black);
+        label.setSize(120, 50);
+        label.setLocation(xPos, yPos);
+        label.setVisible(false);
+        c.add(label);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -193,5 +225,15 @@ public class ReservationFrame extends JFrame implements ActionListener {
 
             }
         }
+    }
+
+    private void setDeleteButtons(JButton button, int xPos, int yPos){
+        button.setSize(50,50);
+        button.setLocation(xPos, yPos);
+        button.setFocusable(false);
+        button.setBorder(null);
+        button.setVisible(false);
+        button.addActionListener(this);
+        c.add(button);
     }
 }
