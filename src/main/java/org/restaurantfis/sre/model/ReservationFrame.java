@@ -1,5 +1,6 @@
 package org.restaurantfis.sre.model;
 
+import org.restaurantfis.sre.exceptions.ReservationsLimitReached;
 import org.restaurantfis.sre.services.ReservationService;
 import org.restaurantfis.sre.services.UserService;
 
@@ -179,12 +180,17 @@ public class ReservationFrame extends JFrame implements ActionListener {
 
         for(int i = 0; i < 6; i++){
             if(e.getSource() == reservationButtons[i]){
-                ReservationService.addReservation("Table" + this.tableNumber,
-                        timeIntervals[i].getText(),
-                        reservationDate.getSelectedIndex() + 1,
-                        currentMonthIndex + 1,
-                        UserService.loggedUser.getName());
-                updateButtons();
+                try{
+                    ReservationService.addReservation("Table" + this.tableNumber,
+                            timeIntervals[i].getText(),
+                            reservationDate.getSelectedIndex() + 1,
+                            currentMonthIndex + 1,
+                            UserService.loggedUser.getName());
+                    updateButtons();
+                }catch(ReservationsLimitReached reservationLimitException){
+                    JOptionPane.showMessageDialog(null, reservationLimitException, "Warning!", JOptionPane.WARNING_MESSAGE);
+                }
+
             }
         }
     }

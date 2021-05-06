@@ -1,7 +1,10 @@
 package org.restaurantfis.sre.services;
 
 import com.mongodb.*;
+import org.restaurantfis.sre.exceptions.ReservationsLimitReached;
 import org.restaurantfis.sre.model.Date;
+
+import java.time.LocalDate;
 
 public class ReservationService {
 
@@ -15,22 +18,37 @@ public class ReservationService {
             database = mongoClient.getDB("TablesDB");
             database.createCollection("tablesCollection", null);
             tableCollections = database.getCollection("tablesCollection");
+            deleteOutdatedReservations();
 
         }catch(Exception e){
             System.out.println(e);
         }
     }
 
-    public static void addReservation(String tableName, String reservationHour, int reservationDay, int reservationMonth, String userName) {
-        BasicDBObject document = new BasicDBObject();
+    public static void addReservation(String tableName, String reservationHour, int reservationDay, int reservationMonth, String userName) throws ReservationsLimitReached {
 
-        document.put("tableName", tableName);
-        document.put("reservationHour", reservationHour);
-        document.put("reservationDay", reservationDay);
-        document.put("reservationMonth", reservationMonth);
-        document.put("userName", userName);
+        DBObject query = new BasicDBObject("tableName", tableName);
+        query.put("reservationDay", reservationDay);
+        query.put("userName", userName);
 
-        tableCollections.insert(document);
+        DBCursor cursor = tableCollections.find(query);
+
+        if(cursor.one() != null){
+            throw new ReservationsLimitReached();
+        }else{
+            BasicDBObject document = new BasicDBObject();
+
+            document.put("tableName", tableName);
+            document.put("reservationHour", reservationHour);
+            document.put("reservationDay", reservationDay);
+            document.put("reservationMonth", reservationMonth);
+            document.put("userName", userName);
+
+            tableCollections.insert(document);
+        }
+
+
+
     }
 
     public static boolean isReserved(String tableName, String reservationHour, int reservationDay, int reservationMonth){
@@ -53,6 +71,26 @@ public class ReservationService {
             System.out.println();
         }
     }
+
+    public static void deleteOutdatedReservations()
+    {
+        LocalDate currentDate = LocalDate.now();
+        int currentMonth = currentDate.getMonthValue();
+        int currentDay = currentDate.getDayOfMonth();
+
+        DBCursor cursor = tableCollections.find();
+        while(cursor.hasNext())
+        {
+            DBObject currentCursor = cursor.next();
+            int cursorDay = (int) currentCursor.get("reservationDay");
+            int cursorMonth = (int) currentCursor.get("reservationMonth");
+            if(cursorMonth == currentMonth && currentDay > cursorDay){
+                ReservationService.tableCollections.remove(currentCursor);
+            }
+        }
+
+    }
+
     public static void dropDB() {
         tableCollections.drop();
     }
