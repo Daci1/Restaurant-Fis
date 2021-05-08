@@ -61,7 +61,7 @@ public class GUImenu extends JFrame implements ActionListener {
     }
     public void ImportdataFromfiles()
     {
-        String filePath = "src/main/java/org/restaurantfis/sre/model/menuModificationstorage.txt";
+        String filePath = "src/main/resources/menuModificationstorage.txt";
         File file = new File(filePath);
         try {
             FileReader fr = new FileReader(file);
@@ -77,7 +77,7 @@ public class GUImenu extends JFrame implements ActionListener {
 
         } catch (FileNotFoundException ex)
         {
-            System.out.println("something went wrong");
+            System.out.println("data not imported");
         }
     }
 
