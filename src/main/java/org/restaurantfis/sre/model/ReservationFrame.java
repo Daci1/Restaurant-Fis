@@ -50,7 +50,7 @@ public class ReservationFrame extends JFrame implements ActionListener {
         this.tableNumber = tableNumber + 1;
         ReservationService.initializeDB();
 
-        setTitle("Reservation for table " + tableNumber);
+        setTitle("Reservation for table " + this.tableNumber);
         setBounds(900, 100, 800, 594);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -73,12 +73,12 @@ public class ReservationFrame extends JFrame implements ActionListener {
         reservationButtons = new JButton[6];
         for(int i = 0; i < 6; i++) reservationButtons[i] = new JButton();
 
-        setButtons(reservationButtons[0], 277, 123);
-        setButtons(reservationButtons[1], 661, 123);
-        setButtons(reservationButtons[2], 277, 275);
-        setButtons(reservationButtons[3], 661, 275);
-        setButtons(reservationButtons[4], 277, 427);
-        setButtons(reservationButtons[5], 661, 427);
+        setReservationButtons(reservationButtons[0], 277, 123);
+        setReservationButtons(reservationButtons[1], 661, 123);
+        setReservationButtons(reservationButtons[2], 277, 275);
+        setReservationButtons(reservationButtons[3], 661, 275);
+        setReservationButtons(reservationButtons[4], 277, 427);
+        setReservationButtons(reservationButtons[5], 661, 427);
 
         timeIntervals = new JLabel[6];
         for(int i = 0; i < 6; i++) timeIntervals[i] = new JLabel();
@@ -127,10 +127,6 @@ public class ReservationFrame extends JFrame implements ActionListener {
         setDeleteButtons(deleteReservationButtons[4], 280,485);
         setDeleteButtons(deleteReservationButtons[5], 673,485);
 
-
-
-
-
         updateButtons();
 
         setVisible(true);
@@ -142,7 +138,7 @@ public class ReservationFrame extends JFrame implements ActionListener {
         c.add(panel);
     }
 
-    private void setButtons(JButton button, int xPos, int yPos){
+    private void setReservationButtons(JButton button, int xPos, int yPos){
         ImageIcon checkIcon = new ImageIcon("src/main/resources/photos/checkButton.png");
 
         button.setSize(103, 109);
@@ -177,10 +173,18 @@ public class ReservationFrame extends JFrame implements ActionListener {
                     currentMonthIndex + 1)){
                 reservationButtons[i].setVisible(false);
                 reservedLabels[i].setVisible(true);
+                //check if the actual user is also the one who reserved the table
+                if(ReservationService.checkReservation("Table" + this.tableNumber,
+                        timeIntervals[i].getText(),
+                        reservationDate.getSelectedIndex() + 1,
+                        currentMonthIndex + 1)){
+                    deleteReservationButtons[i].setVisible(true);
+                }
             }
             else{
                 reservationButtons[i].setVisible(true);
                 reservedLabels[i].setVisible(false);
+                deleteReservationButtons[i].setVisible(false);
             }
         }
     }
@@ -224,15 +228,27 @@ public class ReservationFrame extends JFrame implements ActionListener {
                 }
 
             }
+
+            if(e.getSource() == deleteReservationButtons[i]){
+                ReservationService.deleteReservation("Table" + this.tableNumber,
+                        timeIntervals[i].getText(),
+                        reservationDate.getSelectedIndex() + 1,
+                        currentMonthIndex + 1);
+                updateButtons();
+                JOptionPane.showMessageDialog(null, "You just deleted your reservation!", "Warning!", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }
 
     private void setDeleteButtons(JButton button, int xPos, int yPos){
+        ImageIcon deleteIcon = new ImageIcon("src/main/resources/photos/deleteButton.jpg");
+
         button.setSize(50,50);
         button.setLocation(xPos, yPos);
         button.setFocusable(false);
         button.setBorder(null);
         button.setVisible(false);
+        button.setIcon(deleteIcon);
         button.addActionListener(this);
         c.add(button);
     }

@@ -3,6 +3,7 @@ package org.restaurantfis.sre.services;
 import com.mongodb.*;
 import org.restaurantfis.sre.exceptions.ReservationsLimitReached;
 import org.restaurantfis.sre.model.Date;
+import org.restaurantfis.sre.model.User;
 
 import java.time.LocalDate;
 
@@ -63,6 +64,19 @@ public class ReservationService {
         return false;
     }
 
+    public static boolean checkReservation(String tableName, String reservationHour, int reservationDay, int reservationMonth){
+        DBObject query = new BasicDBObject("tableName", tableName);
+        query.put("reservationHour", reservationHour);
+        query.put("reservationDay", reservationDay);
+        query.put("reservationMonth", reservationMonth);
+        query.put("userName", UserService.loggedUser.getName());
+
+        DBCursor cursor = tableCollections.find(query);
+        if(cursor.one() != null) return true;
+
+        return false;
+    }
+
     public static void printCollection(){
         DBCursor cursor = tableCollections.find();
         while(cursor.hasNext())
@@ -72,8 +86,7 @@ public class ReservationService {
         }
     }
 
-    public static void deleteOutdatedReservations()
-    {
+    public static void deleteOutdatedReservations() {
         LocalDate currentDate = LocalDate.now();
         int currentMonth = currentDate.getMonthValue();
         int currentDay = currentDate.getDayOfMonth();
@@ -90,6 +103,19 @@ public class ReservationService {
         }
 
     }
+
+    public static void deleteReservation(String tableName, String reservationHour, int reservationDay, int reservationMonth){
+        DBObject query = new BasicDBObject("tableName", tableName);
+        query.put("reservationHour", reservationHour);
+        query.put("reservationDay", reservationDay);
+        query.put("reservationMonth", reservationMonth);
+        query.put("userName", UserService.loggedUser.getName());
+
+        DBCursor cursor = tableCollections.find(query);
+        if(cursor.hasNext()) ReservationService.tableCollections.remove(cursor.next());
+
+    }
+
 
     public static void dropDB() {
         tableCollections.drop();
