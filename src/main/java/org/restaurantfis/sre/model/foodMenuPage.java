@@ -141,7 +141,7 @@ public class foodMenuPage extends JFrame implements ActionListener
                 model.removeRow(i);
             }
         } else {
-            String filePath = "src/main/java/org/restaurantfis/sre/model/menuModificationstorage.txt";
+            String filePath = "src/main/resources/menuModificationstorage.txt";
             File file = new File(filePath);
 
             try {
@@ -162,14 +162,14 @@ public class foodMenuPage extends JFrame implements ActionListener
                 bw.close();
                 fw.close();
             } catch (IOException ex) {
-                System.out.println("something went wrong");
+                System.out.println("data not exported");
             }
         }
     }
 
         public void ImportdataFromfiles()
         {
-           String filePath = "src/main/java/org/restaurantfis/sre/model/menuModificationstorage.txt";
+           String filePath = "src/main/resources/menuModificationstorage.txt";
            File file = new File(filePath);
             try {
                 FileReader fr = new FileReader(file);
@@ -185,7 +185,7 @@ public class foodMenuPage extends JFrame implements ActionListener
 
             } catch (FileNotFoundException ex)
             {
-                System.out.println("something went wrong");
+                System.out.println("data not imported");
             }
             }
 
