@@ -1,5 +1,7 @@
 package org.restaurantfis.sre.model;
 
+import org.restaurantfis.sre.exceptions.EmailAlreadyExistsException;
+import org.restaurantfis.sre.exceptions.RegistrationEmptyTextboxException;
 import org.restaurantfis.sre.exceptions.UsernameAlreadyExistsException;
 import org.restaurantfis.sre.services.UserService;
 
@@ -272,7 +274,9 @@ public class RegistrationFrame extends JFrame implements ActionListener {
                         gender = "Other";
 
                     try {
+                        this.checkEmptyTextboxes();
                         UserService.checkExistingUser(this.tname.getText());
+                        UserService.checkExistingEmail(this.temail.getText());
 
                         UserService.addUser(
                                 this.tname.getText(),
@@ -284,8 +288,12 @@ public class RegistrationFrame extends JFrame implements ActionListener {
                                 this.tadd.getText()
                                 );
                         res.setText("Registration complete, you will be redirected.");
+                    }catch(RegistrationEmptyTextboxException emptyTextBox){
+                        res.setText("Please fill all the text boxes!");
                     }catch(UsernameAlreadyExistsException userAlreadyExist){
                         res.setText("User Already Exists!");
+                    }catch(EmailAlreadyExistsException emailAlreadyExist){
+                        res.setText("Email Already Exists!");
                     }
                     catch (Exception UserServiceException)
                     {
@@ -311,6 +319,18 @@ public class RegistrationFrame extends JFrame implements ActionListener {
                 date.setSelectedIndex(0);
                 month.setSelectedIndex(0);
                 year.setSelectedIndex(0);
+            }
+        }
+
+        public void checkEmptyTextboxes() throws RegistrationEmptyTextboxException {
+            if(
+                    this.temail.getText().equals("")
+                    || this.tname.getText().equals("")
+                    || new String(this.tpass.getPassword()).equals("")
+                    || this.tmno.getText().equals("")
+                    || this.tadd.getText().equals("")
+            ){
+                throw new RegistrationEmptyTextboxException();
             }
         }
     }

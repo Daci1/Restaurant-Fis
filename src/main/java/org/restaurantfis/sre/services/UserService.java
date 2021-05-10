@@ -1,6 +1,7 @@
 package org.restaurantfis.sre.services;
 
 import com.mongodb.*;
+import org.restaurantfis.sre.exceptions.EmailAlreadyExistsException;
 import org.restaurantfis.sre.exceptions.UsernameAlreadyExistsException;
 import org.restaurantfis.sre.model.Date;
 
@@ -31,6 +32,15 @@ public class UserService {
         if(cursor.one() != null)
         {
             throw new UsernameAlreadyExistsException(username);
+        }
+    }
+
+    public static void checkExistingEmail(String email) throws EmailAlreadyExistsException{
+        DBObject query = new BasicDBObject("email", email);
+        DBCursor cursor = users_collection.find(query);
+        if(cursor.one() != null)
+        {
+            throw new EmailAlreadyExistsException(email);
         }
     }
 
