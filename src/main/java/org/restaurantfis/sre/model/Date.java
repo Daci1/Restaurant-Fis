@@ -46,4 +46,13 @@ public class Date
         Date date = (Date) o;
         return this.day == date.day && this.month == date.month && this.year == date.year;
     }
+
+    @Override
+    public String toString() {
+        return "Date{" +
+                "day=" + day +
+                ", month=" + month +
+                ", year=" + year +
+                '}';
+    }
 }
