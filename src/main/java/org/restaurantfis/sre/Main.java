@@ -2,6 +2,7 @@ package org.restaurantfis.sre;
 import org.restaurantfis.sre.model.*;
 
 
+
 import org.restaurantfis.sre.model.AppMenuFrame;
 import org.restaurantfis.sre.services.UserService;
 
@@ -12,6 +13,7 @@ public class Main{
 
         UserService.initializeDB();
         new AppMenuFrame();
+
     }
 
 
