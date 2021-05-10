@@ -3,13 +3,17 @@ package org.restaurantfis.sre.services;
 import com.mongodb.*;
 import org.restaurantfis.sre.exceptions.UsernameAlreadyExistsException;
 import org.restaurantfis.sre.model.Date;
+import org.restaurantfis.sre.model.User;
 
 import java.util.Base64;
 
 public class UserService {
     private static MongoClient mongoClient;
     private static DB database;
-    private static DBCollection users_collection;
+    private static DBCollection usersCollection;
+
+    private static boolean isLogged = false;
+    public static User loggedUser;
 
     public static void initializeDB()
     {
@@ -18,7 +22,7 @@ public class UserService {
             database = mongoClient.getDB("UsersDB");
             database.createCollection("users", null);
 
-            users_collection = database.getCollection("users");
+            usersCollection = database.getCollection("users");
 
         }catch(Exception e){
             System.out.println(e);
@@ -27,7 +31,7 @@ public class UserService {
 
     public static void checkExistingUser(String username) throws UsernameAlreadyExistsException{
         DBObject query = new BasicDBObject("name", username);
-        DBCursor cursor = users_collection.find(query);
+        DBCursor cursor = usersCollection.find(query);
         if(cursor.one() != null)
         {
             throw new UsernameAlreadyExistsException(username);
@@ -52,11 +56,11 @@ public class UserService {
         document.put("DOB", dateobj);
         document.put("address", address);
 
-        users_collection.insert(document);
+        usersCollection.insert(document);
     }
 
     public static void printCollection(){
-        DBCursor cursor = users_collection.find();
+        DBCursor cursor = usersCollection.find();
         while(cursor.hasNext())
         {
             System.out.println(cursor.next());
@@ -81,15 +85,36 @@ public class UserService {
 
         DBObject query = new BasicDBObject("email", email);
         query.put("password", UserService.encodePassword(password));
-        DBCursor cursor = users_collection.find(query);
+        DBCursor cursor = usersCollection.find(query);
 
-        if(cursor.one() != null)
+        if(cursor.one() != null) {
+            UserService.loggedUser = new User((String)cursor.one().get("name"),
+                    (String)cursor.one().get("email"),
+                    (String)cursor.one().get("password"),
+                    (String)cursor.one().get("mobile"),
+                    (String)cursor.one().get("gender"),
+                    new Date(((int)((BasicDBObject)cursor.one().get("DOB")).get("day")),
+                            ((int)((BasicDBObject)cursor.one().get("DOB")).get("month")),
+                            ((int)((BasicDBObject)cursor.one().get("DOB")).get("year"))),
+                    (String)cursor.one().get("address"),
+                    false);
+            UserService.setIsLogged(true);
+
             return true;
+        }
         else return false;
     }
 
     public static void dropDB()
     {
-        users_collection.drop();
+        usersCollection.drop();
+    }
+
+    public static boolean isLogged(){
+        return UserService.isLogged;
+    }
+
+    public static void setIsLogged(Boolean isLogged){
+        UserService.isLogged = isLogged;
     }
 }
