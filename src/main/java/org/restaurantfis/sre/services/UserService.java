@@ -41,7 +41,7 @@ public class UserService {
 
     public static void checkExistingEmail(String email) throws EmailAlreadyExistsException{
         DBObject query = new BasicDBObject("email", email);
-        DBCursor cursor = users_collection.find(query);
+        DBCursor cursor = usersCollection.find(query);
         if(cursor.one() != null)
         {
             throw new EmailAlreadyExistsException(email);

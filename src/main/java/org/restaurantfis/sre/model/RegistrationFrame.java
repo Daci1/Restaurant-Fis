@@ -315,7 +315,7 @@ public class RegistrationFrame extends JFrame implements ActionListener {
                             this.tadd.getText(),
                             isAdmin
                     );
-                    res.setText("Registration complete, you will be redirected.");
+                    this.dispose();
                 }catch(RegistrationEmptyTextboxException emptyTextBox){
                     res.setText("Please fill all the text boxes!");
                 }catch(UsernameAlreadyExistsException userAlreadyExist){
