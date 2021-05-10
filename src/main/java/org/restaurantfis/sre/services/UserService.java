@@ -129,12 +129,4 @@ public class UserService {
         usersCollection.drop();
 
     }
-
-    public static boolean isLogged(){
-        return UserService.isLogged;
-    }
-
-    public static void setIsLogged(Boolean isLogged){
-        UserService.isLogged = isLogged;
-    }
 }
