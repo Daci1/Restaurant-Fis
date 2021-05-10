@@ -16,16 +16,13 @@ public class contactInfoGUI extends JFrame
     private JLabel restaurant_staff ;
 
 
-
-
-
-
     public contactInfoGUI()
     {
         setTitle("Contact Information");
         setVisible(true);
         setBounds(300, 90, 600, 600);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         setResizable(false);
 
         contact_info_page = getContentPane();
