@@ -1,6 +1,7 @@
 package org.restaurantfis.sre.services;
 
 import com.mongodb.*;
+import org.restaurantfis.sre.exceptions.EmailAlreadyExistsException;
 import org.restaurantfis.sre.exceptions.UsernameAlreadyExistsException;
 import org.restaurantfis.sre.model.Date;
 import org.restaurantfis.sre.model.User;
@@ -37,8 +38,17 @@ public class UserService {
         }
     }
 
+    public static void checkExistingEmail(String email) throws EmailAlreadyExistsException{
+        DBObject query = new BasicDBObject("email", email);
+        DBCursor cursor = usersCollection.find(query);
+        if(cursor.one() != null)
+        {
+            throw new EmailAlreadyExistsException(email);
+        }
+    }
 
-    public static void addUser(String name, String email, String password, String mobile, String gender, Date date, String address) {
+
+    public static void addUser(String name, String email, String password, String mobile, String gender, Date date, String address, boolean isAdmin) {
         BasicDBObject document = new BasicDBObject();
 
         document.put("name", name);
@@ -54,6 +64,7 @@ public class UserService {
 
         document.put("DOB", dateobj);
         document.put("address", address);
+        document.put("isAdmin", isAdmin);
 
         usersCollection.insert(document);
     }
@@ -97,6 +108,7 @@ public class UserService {
                             ((int)((BasicDBObject)cursor.one().get("DOB")).get("year"))),
                     (String)cursor.one().get("address"),
                     (boolean) cursor.one().get("isAdmin"));
+
             UserService.setIsLogged(true);
 
             return true;
@@ -115,5 +127,14 @@ public class UserService {
     public static void dropDB()
     {
         usersCollection.drop();
+
+    }
+
+    public static boolean isLogged(){
+        return UserService.isLogged;
+    }
+
+    public static void setIsLogged(Boolean isLogged){
+        UserService.isLogged = isLogged;
     }
 }

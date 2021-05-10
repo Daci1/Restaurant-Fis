@@ -13,6 +13,7 @@ public class User
     private String address;
     private boolean isAdmin;
 
+
     public User(String name, String email, String password, String mobile, String gender, Date DOB, String address, boolean isAdmin) {
         this.name = name;
         this.email = email;
@@ -102,7 +103,6 @@ public class User
     public boolean isAdmin() {
         return isAdmin;
     }
-
 
     @Override
     public String toString() {
