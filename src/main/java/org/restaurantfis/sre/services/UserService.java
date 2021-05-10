@@ -12,7 +12,6 @@ public class UserService {
     private static MongoClient mongoClient;
     private static DB database;
     private static DBCollection usersCollection;
-
     private static boolean isLogged = false;
     public static User loggedUser;
 
@@ -108,7 +107,8 @@ public class UserService {
                             ((int)((BasicDBObject)cursor.one().get("DOB")).get("month")),
                             ((int)((BasicDBObject)cursor.one().get("DOB")).get("year"))),
                     (String)cursor.one().get("address"),
-                    false);
+                    (boolean) cursor.one().get("isAdmin"));
+
             UserService.setIsLogged(true);
 
             return true;
@@ -116,9 +116,18 @@ public class UserService {
         else return false;
     }
 
+    public static boolean isLogged(){
+        return UserService.isLogged;
+    }
+
+    public static void setIsLogged(Boolean isLogged){
+        UserService.isLogged = isLogged;
+    }
+
     public static void dropDB()
     {
         usersCollection.drop();
+
     }
 
     public static boolean isLogged(){
