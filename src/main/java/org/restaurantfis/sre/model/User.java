@@ -104,4 +104,17 @@ public class User
     }
 
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", gender='" + gender + '\'' +
+                ", DOB=" + DOB +
+                ", address='" + address + '\'' +
+                ", isAdmin=" + isAdmin +
+                '}';
+    }
 }
