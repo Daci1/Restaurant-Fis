@@ -45,7 +45,7 @@ public class UserService {
     }
 
 
-    public static void addUser(String name, String email, String password, String mobile, String gender, Date date, String address) {
+    public static void addUser(String name, String email, String password, String mobile, String gender, Date date, String address, boolean isAdmin) {
         BasicDBObject document = new BasicDBObject();
 
         document.put("name", name);
@@ -61,6 +61,7 @@ public class UserService {
 
         document.put("DOB", dateobj);
         document.put("address", address);
+        document.put("isAdmin", isAdmin);
 
         users_collection.insert(document);
     }

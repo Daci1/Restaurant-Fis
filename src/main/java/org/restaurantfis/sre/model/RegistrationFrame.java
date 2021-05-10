@@ -3,6 +3,7 @@ package org.restaurantfis.sre.model;
 import org.restaurantfis.sre.exceptions.EmailAlreadyExistsException;
 import org.restaurantfis.sre.exceptions.RegistrationEmptyTextboxException;
 import org.restaurantfis.sre.exceptions.UsernameAlreadyExistsException;
+import org.restaurantfis.sre.exceptions.WrongAdminPasswordException;
 import org.restaurantfis.sre.services.UserService;
 
 import javax.swing.*;
@@ -43,7 +44,8 @@ public class RegistrationFrame extends JFrame implements ActionListener {
         private JLabel add;
         private JTextArea tadd;
 
-        private JCheckBox term;
+        private JCheckBox adminCheck;
+        private JPasswordField tadmin;
 
         private JButton sub;
         private JButton reset;
@@ -78,6 +80,8 @@ public class RegistrationFrame extends JFrame implements ActionListener {
                 "1994", "1995", "1996", "1997",
                 "1998", "1999", "2000", "2001",
                 "2002", "2003"};
+
+        private String adminPass = "123";
 
         // constructor, to initialize the components
         // with default values.
@@ -223,13 +227,25 @@ public class RegistrationFrame extends JFrame implements ActionListener {
             tadd.setLineWrap(true);
             c.add(tadd);
 
-            term = new JCheckBox("Accept Terms And Conditions.");
-            term.setFont(new Font("Arial", Font.PLAIN, 15));
-            term.setSize(250, 20);
-            term.setLocation(150, 400);
-            term.setBackground(Color.gray);
-            term.setFocusable(false);
-            c.add(term);
+            adminCheck = new JCheckBox("Admin Account");
+            adminCheck.setFont(new Font("Arial", Font.PLAIN, 15));
+            adminCheck.setSize(130, 20);
+            adminCheck.setLocation(150, 400);
+            adminCheck.setBackground(Color.gray);
+            adminCheck.setFocusable(false);
+            adminCheck.addActionListener(this);
+            c.add(adminCheck);
+
+            tadmin = new JPasswordField();
+            tadmin.setSize(150, 20);
+            tadmin.setFont(new Font("Arial", Font.PLAIN, 15));
+            tadmin.setLocation(280, 400);
+            tadmin.setBorder(null);
+            tadmin.setVisible(false);
+            c.add(tadmin);
+
+
+
 
             sub = new JButton("Submit");
             sub.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -262,49 +278,57 @@ public class RegistrationFrame extends JFrame implements ActionListener {
         // by the user and act accordingly
         public void actionPerformed(ActionEvent e)
         {
+
+            if(e.getSource() == adminCheck){
+                tadmin.setText("");
+                tadmin.setVisible(!tadmin.isVisible());
+            }
+
             if (e.getSource() == sub) {
-                if (term.isSelected()) {
 
-                    String gender;
-                    if(this.male.isSelected())
-                        gender = "Male";
-                    else if(this.female.isSelected())
-                        gender = "Female";
-                    else
-                        gender = "Other";
+                String gender;
+                if(this.male.isSelected())
+                    gender = "Male";
+                else if(this.female.isSelected())
+                    gender = "Female";
+                else
+                    gender = "Other";
+                try {
+                    this.checkEmptyTextboxes();
+                    UserService.checkExistingUser(this.tname.getText());
+                    UserService.checkExistingEmail(this.temail.getText());
 
-                    try {
-                        this.checkEmptyTextboxes();
-                        UserService.checkExistingUser(this.tname.getText());
-                        UserService.checkExistingEmail(this.temail.getText());
-
-                        UserService.addUser(
-                                this.tname.getText(),
-                                this.temail.getText(),
-                                new String(this.tpass.getPassword()),
-                                this.tmno.getText(),
-                                gender,
-                                new Date(this.date.getSelectedIndex() + 1, this.month.getSelectedIndex() + 1, this.year.getSelectedIndex() + 1950),
-                                this.tadd.getText()
-                                );
-                        res.setText("Registration complete, you will be redirected.");
-                    }catch(RegistrationEmptyTextboxException emptyTextBox){
-                        res.setText("Please fill all the text boxes!");
-                    }catch(UsernameAlreadyExistsException userAlreadyExist){
-                        res.setText("User Already Exists!");
-                    }catch(EmailAlreadyExistsException emailAlreadyExist){
-                        res.setText("Email Already Exists!");
-                    }
-                    catch (Exception UserServiceException)
-                    {
-                        System.out.println(UserServiceException);
+                    boolean isAdmin = false;
+                    if (adminCheck.isSelected()) {
+                        if(!new String(tadmin.getPassword()).equals(this.adminPass)) throw new WrongAdminPasswordException();
+                        else isAdmin = true;
                     }
 
+                    UserService.addUser(
+                            this.tname.getText(),
+                            this.temail.getText(),
+                            new String(this.tpass.getPassword()),
+                            this.tmno.getText(),
+                            gender,
+                            new Date(this.date.getSelectedIndex() + 1, this.month.getSelectedIndex() + 1, this.year.getSelectedIndex() + 1950),
+                            this.tadd.getText(),
+                            isAdmin
+                    );
+                    res.setText("Registration complete, you will be redirected.");
+                }catch(RegistrationEmptyTextboxException emptyTextBox){
+                    res.setText("Please fill all the text boxes!");
+                }catch(UsernameAlreadyExistsException userAlreadyExist){
+                    res.setText("User Already Exists!");
+                }catch(EmailAlreadyExistsException emailAlreadyExist){
+                    res.setText("Email Already Exists!");
+                }catch(WrongAdminPasswordException wrongAdminPassword){
+                    res.setText("Wrong admin password!");
+                }catch (Exception UserServiceException) {
+                    System.out.println(UserServiceException);
                 }
-                else {
-                    res.setText("Please accept the"
-                            + " terms & conditions..");
-                }
+
+
+
             }
 
             else if (e.getSource() == reset) {
@@ -315,10 +339,11 @@ public class RegistrationFrame extends JFrame implements ActionListener {
                 tadd.setText(def);
                 tmno.setText(def);
                 res.setText(def);
-                term.setSelected(false);
+                adminCheck.setSelected(false);
                 date.setSelectedIndex(0);
                 month.setSelectedIndex(0);
                 year.setSelectedIndex(0);
+                tadmin.setText(def);
             }
         }
 
