@@ -12,9 +12,8 @@ public class Main{
     {
 
         UserService.initializeDB();
-        //new AppMenuFrame();
-       //new RegistrationFrame();
-        //new LoginFrame();
+        new AppMenuFrame();
+
         new clientContactinfo();
 
     }
