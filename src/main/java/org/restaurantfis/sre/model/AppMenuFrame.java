@@ -1,12 +1,12 @@
 package org.restaurantfis.sre.model;
 
+import org.restaurantfis.sre.services.ReservationService;
 import org.restaurantfis.sre.services.UserService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class AppMenuFrame extends JFrame implements ActionListener {
 
@@ -18,11 +18,17 @@ public class AppMenuFrame extends JFrame implements ActionListener {
     private static JButton contactButton;
     private static JButton menuButton;
     private static JButton logOutButton;
+    private static JButton reservationsButton;
 
     private static JButton[] tableButtons;
 
 
+
     public AppMenuFrame(){
+
+        UserService.initializeDB();
+        ReservationService.initializeDB();
+
         setTitle("Restaurant FIS");
         setBounds(300, 90, 1200, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -52,6 +58,11 @@ public class AppMenuFrame extends JFrame implements ActionListener {
 
         contactButton = new JButton();
         this.configButton(contactButton, "Contact", 300);
+        
+        reservationsButton = new JButton();
+        this.configButton(reservationsButton, "Reservations", 200);
+        reservationsButton.setSize(130,50);
+        reservationsButton.setVisible(false);
 
         JPanel menuWhitePanel = new JPanel();
         menuWhitePanel.setBackground(Color.white);
@@ -118,12 +129,19 @@ public class AppMenuFrame extends JFrame implements ActionListener {
             System.out.println("TODO: Menu");
         }
 
+        if(e.getSource() == reservationsButton)
+        {
+            new ReservationlistFrame();
+        }
+
         if(e.getSource() == logOutButton){
             UserService.setIsLogged(false);
             UserService.loggedUser = null;
             dispose();
             new AppMenuFrame();
         }
+
+
 
         for(int i = 0; i < 6; i++){ //Just for testing
             if(e.getSource() == tableButtons[i]){
@@ -155,6 +173,8 @@ public class AppMenuFrame extends JFrame implements ActionListener {
         contactButton.setSize(100, 50);
         contactButton.setLocation(100, 0);
         contactButton.setFocusable(false);
+
+        if(UserService.loggedUser.isAdmin()) reservationsButton.setVisible(true);
 
 
 

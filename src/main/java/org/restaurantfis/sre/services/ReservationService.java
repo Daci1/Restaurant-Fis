@@ -3,6 +3,7 @@ package org.restaurantfis.sre.services;
 import com.mongodb.*;
 import org.restaurantfis.sre.exceptions.ReservationsLimitReached;
 import org.restaurantfis.sre.model.Date;
+import org.restaurantfis.sre.model.ReservationlistFrame;
 import org.restaurantfis.sre.model.User;
 
 import java.time.LocalDate;
@@ -116,6 +117,10 @@ public class ReservationService {
 
     }
 
+    public static DBCollection getTableCollections()
+    {
+        return tableCollections;
+    }
 
     public static void dropDB() {
         tableCollections.drop();

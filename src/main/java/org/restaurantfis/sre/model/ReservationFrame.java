@@ -48,7 +48,6 @@ public class ReservationFrame extends JFrame implements ActionListener {
 
     public ReservationFrame(int tableNumber){
         this.tableNumber = tableNumber + 1;
-        ReservationService.initializeDB();
 
         setTitle("Reservation for table " + this.tableNumber);
         setBounds(900, 100, 800, 594);
