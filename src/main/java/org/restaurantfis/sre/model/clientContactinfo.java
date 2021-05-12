@@ -30,19 +30,20 @@ public class clientContactinfo extends JFrame
 
     public clientContactinfo()
     {
-        setTitle("Clients info");
-        setBounds(300, 90, 900, 600);
+        setTitle("Clients Info");
+        setBounds(460, 240, 1000, 600);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
         c = getContentPane() ;
-        c.setBackground(Color.gray);
+        c.setBackground(new Color(0,82,33));
         c.setLayout(null);
 
         page_title = new JLabel("Clients info");
+        page_title.setForeground(Color.black);
         page_title.setFont(new Font("Arial", Font.BOLD, 40));
         page_title.setSize(500, 50);
-        page_title.setLocation(350, 30);
+        page_title.setLocation(400, 17);
         c.add(page_title);
 
         model = new DefaultTableModel() ;
@@ -53,7 +54,7 @@ public class clientContactinfo extends JFrame
         clients.setEnabled(false);
 
         pane = new JScrollPane(clients);
-        pane.setBounds(175, 200,550,200);
+        pane.setBounds(150, 75,700,450);
         c.add(pane);
         addTotable();
 

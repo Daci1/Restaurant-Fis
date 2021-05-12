@@ -12,8 +12,6 @@ public class Main{
 
         new AppMenuFrame();
 
-        new clientContactinfo();
-
     }
 
 
