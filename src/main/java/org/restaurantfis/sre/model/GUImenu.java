@@ -18,12 +18,11 @@ public class GUImenu extends JFrame implements ActionListener {
     private Object[] row = new Object[4];
     private DefaultTableModel model;
     private JScrollPane pane;
-    private JButton  back_button;
 
     public GUImenu() {
         setTitle("Restaurant Food Menu");
         setBounds(300, 90, 900, 600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
         menu_page = getContentPane();
         menu_page.setBackground(Color.gray);
@@ -45,12 +44,6 @@ public class GUImenu extends JFrame implements ActionListener {
         pane = new JScrollPane(menu);
         pane.setBounds(175, 200, 550, 200);
         menu_page.add(pane);
-
-        //back button
-        back_button = new JButton("BACK");
-        back_button.setFont(new Font("Arial", Font.PLAIN, 15));
-        back_button.setBounds(50, 30, 75, 50);
-        menu_page.add(back_button);
 
         setVisible(true);
     }

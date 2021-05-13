@@ -132,7 +132,13 @@ public class AppMenuFrame extends JFrame implements ActionListener {
         }
 
         if(e.getSource() == menuButton){
-            System.out.println("TODO: Menu");
+            if(UserService.isLogged() && UserService.loggedUser.isAdmin()){
+                new foodMenuPage();
+            }
+            else{
+                new GUImenu();
+            }
+
         }
 
         if(e.getSource() == reservationsButton)
