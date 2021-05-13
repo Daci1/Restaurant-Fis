@@ -23,7 +23,7 @@ public class foodMenuPage extends JFrame implements ActionListener
     private JScrollPane pane ;
 
     private JTextField food,food_price,drinks,drinks_price;
-    private JButton add_button, delete_button, save_button, edit_button, back_button;
+    private JButton add_button, delete_button, save_button, edit_button;
 
     private ActionListener add_action, delete_action, save_action;
 
@@ -32,7 +32,7 @@ public class foodMenuPage extends JFrame implements ActionListener
     {
         setTitle("Restaurant Food Menu");
         setBounds(300, 90, 900, 600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
         menu_page = getContentPane();
         menu_page.setBackground(Color.gray);
@@ -64,11 +64,6 @@ public class foodMenuPage extends JFrame implements ActionListener
         edit_button.addActionListener(this);
         menu_page.add(edit_button);
 
-        //back button
-        back_button = new JButton("BACK");
-        back_button.setFont(new Font("Arial", Font.PLAIN,15));
-        back_button.setBounds(130,30, 75,50);
-        menu_page.add(back_button);
 
 
 
