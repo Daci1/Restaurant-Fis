@@ -35,7 +35,7 @@ public class LoginFrame extends JFrame implements ActionListener {
     {
         setTitle("Login Form");
         setBounds(300, 90, 900, 600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
         c = getContentPane();
@@ -110,6 +110,8 @@ public class LoginFrame extends JFrame implements ActionListener {
             try{
                 checkCredentials();
                 res.setText("Log In completed, you will be redirected.");
+                AppMenuFrame.restructureAfterLogin();
+                this.dispose();
             }catch(EmptyEmailException emptyUser) {
                 res.setText("Email cannot be empty.");
             }catch (EmptyPasswordException emptyPass){

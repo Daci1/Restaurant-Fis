@@ -14,11 +14,6 @@ public class contactInfoGUI extends JFrame
     private JList staff ;
     private String staff_list[] = new String[6];
     private JLabel restaurant_staff ;
-    private JButton contact_information_back_button ;
-
-
-
-
 
 
     public contactInfoGUI()
@@ -26,7 +21,8 @@ public class contactInfoGUI extends JFrame
         setTitle("Contact Information");
         setVisible(true);
         setBounds(300, 90, 600, 600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         setResizable(false);
 
         contact_info_page = getContentPane();
@@ -41,7 +37,7 @@ public class contactInfoGUI extends JFrame
         contact_info_title.setLocation(175,30);
         contact_info_page.add(contact_info_title);
 
-        adress = new JLabel("Adress : Aleea Studentilor, nr 12, 300551");
+        adress = new JLabel("Address : Aleea Studentilor, nr 12, 300551");
         adress.setForeground(Color.black);
         adress.setFont(new Font("Arial", Font.PLAIN, 15));
         adress.setLocation(40, 130);
@@ -87,14 +83,6 @@ public class contactInfoGUI extends JFrame
         staff.setBorder(BorderFactory.createLineBorder(Color.black));
         contact_info_page.add(staff);
 
-
-        contact_information_back_button = new JButton("BACK");
-        contact_information_back_button.setVisible(true);
-        contact_information_back_button.setFont(new Font("Arial", Font.PLAIN, 10));
-        contact_information_back_button.setForeground(Color.black);
-        contact_information_back_button.setLocation(10,10);
-        contact_information_back_button.setSize(40,45);
-        contact_info_page.add(contact_information_back_button);
         setVisible(true);
 
 
