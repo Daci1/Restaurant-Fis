@@ -124,6 +124,10 @@ public class UserService {
         UserService.isLogged = isLogged;
     }
 
+    public static DBCollection getUsersCollection()
+    {
+        return usersCollection;
+    }
     public static void dropDB()
     {
         usersCollection.drop();

@@ -19,6 +19,7 @@ public class AppMenuFrame extends JFrame implements ActionListener {
     private static JButton menuButton;
     private static JButton logOutButton;
     private static JButton reservationsButton;
+    private static JButton clientsContactInfoButton;
 
     private static JButton[] tableButtons;
 
@@ -63,6 +64,11 @@ public class AppMenuFrame extends JFrame implements ActionListener {
         this.configButton(reservationsButton, "Reservations", 200);
         reservationsButton.setSize(130,50);
         reservationsButton.setVisible(false);
+
+        clientsContactInfoButton = new JButton();
+        this.configButton(clientsContactInfoButton, "Customers Info", 330);
+        clientsContactInfoButton.setSize(160, 50);
+        clientsContactInfoButton.setVisible(false);
 
         JPanel menuWhitePanel = new JPanel();
         menuWhitePanel.setBackground(Color.white);
@@ -134,6 +140,10 @@ public class AppMenuFrame extends JFrame implements ActionListener {
             new ReservationlistFrame();
         }
 
+        if(e.getSource() == clientsContactInfoButton){
+            new clientContactinfo();
+        }
+
         if(e.getSource() == logOutButton){
             UserService.setIsLogged(false);
             UserService.loggedUser = null;
@@ -174,7 +184,10 @@ public class AppMenuFrame extends JFrame implements ActionListener {
         contactButton.setLocation(100, 0);
         contactButton.setFocusable(false);
 
-        if(UserService.loggedUser.isAdmin()) reservationsButton.setVisible(true);
+        if(UserService.loggedUser.isAdmin()) {
+            reservationsButton.setVisible(true);
+            clientsContactInfoButton.setVisible(true);
+        }
 
 
 
