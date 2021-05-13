@@ -2,9 +2,6 @@ package org.restaurantfis.sre.services;
 
 import com.mongodb.*;
 import org.restaurantfis.sre.exceptions.ReservationsLimitReached;
-import org.restaurantfis.sre.model.Date;
-import org.restaurantfis.sre.model.ReservationlistFrame;
-import org.restaurantfis.sre.model.User;
 
 import java.time.LocalDate;
 
@@ -12,14 +9,14 @@ public class ReservationService {
 
     private static MongoClient mongoClient;
     private static DB database;
-    private static DBCollection tableCollections;
+    private static DBCollection tablesCollection;
 
     public static void initializeDB() {
         try{
             mongoClient = new MongoClient();
             database = mongoClient.getDB("TablesDB");
             database.createCollection("tablesCollection", null);
-            tableCollections = database.getCollection("tablesCollection");
+            tablesCollection = database.getCollection("tablesCollection");
             deleteOutdatedReservations();
 
         }catch(Exception e){
@@ -33,7 +30,7 @@ public class ReservationService {
         query.put("reservationDay", reservationDay);
         query.put("userName", userName);
 
-        DBCursor cursor = tableCollections.find(query);
+        DBCursor cursor = tablesCollection.find(query);
 
         if(cursor.one() != null){
             throw new ReservationsLimitReached();
@@ -46,7 +43,7 @@ public class ReservationService {
             document.put("reservationMonth", reservationMonth);
             document.put("userName", userName);
 
-            tableCollections.insert(document);
+            tablesCollection.insert(document);
         }
 
 
@@ -59,7 +56,7 @@ public class ReservationService {
         query.put("reservationDay", reservationDay);
         query.put("reservationMonth", reservationMonth);
 
-        DBCursor cursor = tableCollections.find(query);
+        DBCursor cursor = tablesCollection.find(query);
         if(cursor.one() != null) return true;
 
         return false;
@@ -72,14 +69,14 @@ public class ReservationService {
         query.put("reservationMonth", reservationMonth);
         query.put("userName", UserService.loggedUser.getName());
 
-        DBCursor cursor = tableCollections.find(query);
+        DBCursor cursor = tablesCollection.find(query);
         if(cursor.one() != null) return true;
 
         return false;
     }
 
     public static void printCollection(){
-        DBCursor cursor = tableCollections.find();
+        DBCursor cursor = tablesCollection.find();
         while(cursor.hasNext())
         {
             System.out.println(cursor.next());
@@ -92,14 +89,14 @@ public class ReservationService {
         int currentMonth = currentDate.getMonthValue();
         int currentDay = currentDate.getDayOfMonth();
 
-        DBCursor cursor = tableCollections.find();
+        DBCursor cursor = tablesCollection.find();
         while(cursor.hasNext())
         {
             DBObject currentCursor = cursor.next();
             int cursorDay = (int) currentCursor.get("reservationDay");
             int cursorMonth = (int) currentCursor.get("reservationMonth");
             if(cursorMonth == currentMonth && currentDay > cursorDay){
-                ReservationService.tableCollections.remove(currentCursor);
+                ReservationService.tablesCollection.remove(currentCursor);
             }
         }
 
@@ -112,18 +109,19 @@ public class ReservationService {
         query.put("reservationMonth", reservationMonth);
         query.put("userName", UserService.loggedUser.getName());
 
-        DBCursor cursor = tableCollections.find(query);
-        if(cursor.hasNext()) ReservationService.tableCollections.remove(cursor.next());
+        DBCursor cursor = tablesCollection.find(query);
+        if(cursor.hasNext()) ReservationService.tablesCollection.remove(cursor.next());
 
     }
 
-    public static DBCollection getTableCollections()
+    public static DBCollection getTablesCollection()
     {
-        return tableCollections;
+        return tablesCollection;
     }
 
     public static void dropDB() {
-        tableCollections.drop();
+        tablesCollection.drop();
     }
+
 
 }

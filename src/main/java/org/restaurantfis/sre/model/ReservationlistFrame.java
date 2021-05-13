@@ -3,7 +3,6 @@ package org.restaurantfis.sre.model;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import org.restaurantfis.sre.services.ReservationService;
-import org.restaurantfis.sre.services.UserService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -75,7 +74,7 @@ public class ReservationlistFrame extends JFrame {
 
     public static void populateReservationList()
     {
-        DBCursor cursor = ReservationService.getTableCollections().find();
+        DBCursor cursor = ReservationService.getTablesCollection().find();
         while(cursor.hasNext())
         {
             DBObject currentDBObject = cursor.next();
