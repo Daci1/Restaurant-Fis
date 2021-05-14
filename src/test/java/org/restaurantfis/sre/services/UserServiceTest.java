@@ -18,6 +18,39 @@ public class UserServiceTest {
     private static User testUser = UserTest.createTestUser();
 
 
+    public static void addTestUser(){
+        UserService.addUser("testName",
+                "testEmail",
+                "testPass",
+                "testMobile",
+                "testGender",
+                new Date(0,0,0),
+                "testAddress",
+                false);
+    }
+
+
+    public static void removeTestUser(){
+        BasicDBObject document = new BasicDBObject();
+
+        document.put("name", "testName");
+        document.put("email", "testEmail");
+        document.put("password", UserService.encodePassword("testPass"));
+        document.put("mobile", "testMobile");
+        document.put("gender", "testGender");
+
+        BasicDBObject dateobj = new BasicDBObject();
+        dateobj.put("day", 0);
+        dateobj.put("month", 0);
+        dateobj.put("year", 0);
+
+        document.put("DOB", dateobj);
+        document.put("address", "testAddress");
+        document.put("isAdmin", false);
+
+        DBCursor deleteUser = UserService.getUsersCollection().find(document);
+        UserService.getUsersCollection().remove(deleteUser.one());
+    }
 
     @Test
     public void testInitializeDB(){
@@ -43,14 +76,9 @@ public class UserServiceTest {
 
     @Test
     public void addUser(){
-        UserService.addUser("testName",
-                "testEmail",
-                "testPass",
-                "testMobile",
-                "testGender",
-                new Date(0,0,0),
-                "testAddress",
-                false);
+
+        addTestUser();
+
         DBCursor cursor = UserService.getUsersCollection().find();
         DBObject lastUserAdded = cursor.one();
         while(cursor.hasNext())
@@ -73,25 +101,8 @@ public class UserServiceTest {
                 () -> assertEquals(false, (boolean) finalLastUserAdded.get("isAdmin"))
                 );
 
-        BasicDBObject document = new BasicDBObject();
+        removeTestUser();
 
-        document.put("name", "testName");
-        document.put("email", "testEmail");
-        document.put("password", UserService.encodePassword("testPass"));
-        document.put("mobile", "testMobile");
-        document.put("gender", "testGender");
-
-        BasicDBObject dateobj = new BasicDBObject();
-        dateobj.put("day", 0);
-        dateobj.put("month", 0);
-        dateobj.put("year", 0);
-
-        document.put("DOB", dateobj);
-        document.put("address", "testAddress");
-        document.put("isAdmin", false);
-
-        DBCursor deleteUser = UserService.getUsersCollection().find(document);
-        UserService.getUsersCollection().remove(deleteUser.one());
     }
 
     @Test
@@ -103,6 +114,56 @@ public class UserServiceTest {
                 () -> assertEquals("dGVzdFBhc3N3b3JkMw==", UserService.encodePassword("testPassword3")),
                 () -> assertEquals("dGVzdFBhc3N3b3JkNA==", UserService.encodePassword("testPassword4"))
         );
+    }
+
+    @Test
+    public void decodePassword(){
+        Assertions.assertAll(
+                () -> assertEquals( "testPassword1", UserService.decodePassword("dGVzdFBhc3N3b3JkMQ==")),
+                () -> assertEquals( "testPassword2", UserService.decodePassword("dGVzdFBhc3N3b3JkMg==")),
+                () -> assertEquals( "testPassword3", UserService.decodePassword("dGVzdFBhc3N3b3JkMw==")),
+                () -> assertEquals( "testPassword4", UserService.decodePassword("dGVzdFBhc3N3b3JkNA=="))
+
+        );
+    }
+
+    @Test
+    public void validateLogin(){
+        addTestUser();
+
+        assertEquals(true, UserService.validateLogin("testEmail", "testPass"));
+
+        removeTestUser();
+
+    }
+
+    @Test
+    public void isLogged(){
+
+        addTestUser();
+
+        UserService.validateLogin("testEmail", "testPassword");
+        assertEquals(true, UserService.isLogged());
+
+        removeTestUser();
+
+    }
+
+    @Test
+    public void setIsLogged(){
+        UserService.setIsLogged(true);
+        UserService.setIsLogged(false);
+        UserService.setIsLogged(true);
+
+        assertEquals(true, UserService.isLogged());
+
+    }
+
+    @Test
+    public void getUsersCollection(){
+        DBCollection usersCollection = UserService.getUsersCollection();
+
+        assertEquals("users", usersCollection.getName());
     }
 
 }
