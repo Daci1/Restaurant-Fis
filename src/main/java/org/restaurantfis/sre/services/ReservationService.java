@@ -95,7 +95,7 @@ public class ReservationService {
             DBObject currentCursor = cursor.next();
             int cursorDay = (int) currentCursor.get("reservationDay");
             int cursorMonth = (int) currentCursor.get("reservationMonth");
-            if(cursorMonth == currentMonth && currentDay > cursorDay){
+            if(cursorMonth <= currentMonth && currentDay > cursorDay){
                 ReservationService.tablesCollection.remove(currentCursor);
             }
         }
