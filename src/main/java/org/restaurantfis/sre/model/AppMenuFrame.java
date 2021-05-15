@@ -11,17 +11,17 @@ import java.awt.event.ActionListener;
 public class AppMenuFrame extends JFrame implements ActionListener {
 
 
-    private static Container c;
+    public static Container c;
 
-    private static JButton registerButton;
-    private static JButton loginButton;
-    private static JButton contactButton;
-    private static JButton menuButton;
-    private static JButton logOutButton;
-    private static JButton reservationsButton;
-    private static JButton clientsContactInfoButton;
+    public static JButton registerButton;
+    public static JButton loginButton;
+    public static JButton contactButton;
+    public static JButton menuButton;
+    public static JButton logOutButton;
+    public static JButton reservationsButton;
+    public static JButton clientsContactInfoButton;
 
-    private static JButton[] tableButtons;
+    public static JButton[] tableButtons;
 
 
 
