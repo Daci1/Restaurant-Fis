@@ -5,15 +5,15 @@ import java.awt.*;
 
 public class contactInfoGUI extends JFrame
 {
-    private Container contact_info_page ;
-    private JLabel contact_info_title;
+    public Container contact_info_page ;
+    public JLabel contact_info_title;
 
-    private JLabel adress ;
-    private JLabel phone_number;
-    private JLabel social_media ;
-    private JList staff ;
-    private String staff_list[] = new String[6];
-    private JLabel restaurant_staff ;
+    public JLabel adress ;
+    public JLabel phone_number;
+    public JLabel social_media ;
+    public JList staff ;
+    public String staff_list[] = new String[6];
+    public JLabel restaurant_staff ;
 
 
     public contactInfoGUI()

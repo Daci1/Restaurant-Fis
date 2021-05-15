@@ -3,23 +3,20 @@ package org.restaurantfis.sre.model;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import com.mongodb.*;
 import org.restaurantfis.sre.services.UserService;
 
 public class clientContactinfo extends JFrame
 {
-    private JLabel page_title ;
-    private static Container c ;
+    public JLabel page_title ;
+    public static Container c ;
 
-    private JTable clients;
-    private static DefaultTableModel model ;
-    private static JScrollPane pane ;
-    private Object[] columns_name = {"Name","Email","Address"};
-    private static Object[] row = new Object[3];
+    public JTable clients;
+    public static DefaultTableModel model ;
+    public static JScrollPane pane ;
+    public Object[] columns_name = {"Name","Email","Address"};
+    public static Object[] row = new Object[3];
 
 
 

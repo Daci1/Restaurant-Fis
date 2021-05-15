@@ -13,20 +13,20 @@ import java.awt.event.ActionListener;
 public class LoginFrame extends JFrame implements ActionListener {
 
     // Components of the Form
-    private static Container c;
+    public static Container c;
 
-    private static JLabel title;
+    public static JLabel title;
 
-    private static JLabel email;
-    private static JTextField temail;
+    public static JLabel email;
+    public static JTextField temail;
 
-    private static JLabel pass;
-    private static JPasswordField tpass;
+    public static JLabel pass;
+    public static JPasswordField tpass;
 
-    private static JButton log_in;
-    private static JButton register;
+    public static JButton log_in;
+    public static JButton register;
 
-    private JLabel res;
+    public JLabel res;
 
     // constructor, to initialize the components
     // with default values.

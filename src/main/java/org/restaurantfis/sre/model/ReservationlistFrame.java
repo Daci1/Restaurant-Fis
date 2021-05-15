@@ -3,7 +3,6 @@ package org.restaurantfis.sre.model;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import org.restaurantfis.sre.services.ReservationService;
-import org.restaurantfis.sre.services.UserService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,14 +11,14 @@ import java.text.DateFormatSymbols;
 
 public class ReservationlistFrame extends JFrame {
 
-    private static Container c;
-    private static JScrollPane pane;
+    public static Container c;
+    public static JScrollPane pane;
 
-    private Object[] columns = {"User Name", "Table", "Reservataion Hour", "Reservation Day", "Reservation Month"};
-    private static Object[] row = new Object[5];
-    private static DefaultTableModel model;
-    private JTable menu ;
-    private JLabel titleLabel;
+    public Object[] columns = {"User Name", "Table", "Reservataion Hour", "Reservation Day", "Reservation Month"};
+    public static Object[] row = new Object[5];
+    public static DefaultTableModel model;
+    public JTable menu ;
+    public JLabel titleLabel;
 
     public ReservationlistFrame()
     {
@@ -75,7 +74,7 @@ public class ReservationlistFrame extends JFrame {
 
     public static void populateReservationList()
     {
-        DBCursor cursor = ReservationService.getTableCollections().find();
+        DBCursor cursor = ReservationService.getTablesCollection().find();
         while(cursor.hasNext())
         {
             DBObject currentDBObject = cursor.next();
