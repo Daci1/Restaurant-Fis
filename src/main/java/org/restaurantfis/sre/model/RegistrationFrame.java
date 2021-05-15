@@ -14,45 +14,45 @@ import java.awt.event.ActionListener;
 public class RegistrationFrame extends JFrame implements ActionListener {
 
         // Components of the Form
-        private Container c;
+        public Container c;
 
-        private JLabel title;
+    public JLabel title;
 
-        private JLabel name;
-        private JTextField tname;
+    public JLabel name;
+    public JTextField tname;
 
-        private JLabel email;
-        private JTextField temail;
+    public JLabel email;
+    public JTextField temail;
 
-        private JLabel pass;
-        private JPasswordField tpass;
+    public JLabel pass;
+    public JPasswordField tpass;
 
-        private JLabel mno;
-        private JTextField tmno;
+    public JLabel mno;
+    public JTextField tmno;
 
-        private JLabel gender;
-        private JRadioButton male;
-        private JRadioButton female;
-        private JRadioButton other;
-        private ButtonGroup gengp;
+    public JLabel gender;
+    public JRadioButton male;
+    public JRadioButton female;
+    public JRadioButton other;
+    public ButtonGroup gengp;
 
-        private JLabel dob;
-        private JComboBox date;
-        private JComboBox month;
-        private JComboBox year;
+    public JLabel dob;
+    public JComboBox date;
+    public JComboBox month;
+    public JComboBox year;
 
-        private JLabel add;
-        private JTextArea tadd;
+    public JLabel add;
+    public JTextArea tadd;
 
-        private JCheckBox adminCheck;
-        private JPasswordField tadmin;
+    public JCheckBox adminCheck;
+    public JPasswordField tadmin;
 
-        private JButton sub;
-        private JButton reset;
+    public JButton sub;
+    public JButton reset;
 
-        private JLabel res;
+    public JLabel res;
 
-        private String dates[]
+    public String dates[]
                 = { "1", "2", "3", "4", "5",
                 "6", "7", "8", "9", "10",
                 "11", "12", "13", "14", "15",
@@ -60,11 +60,11 @@ public class RegistrationFrame extends JFrame implements ActionListener {
                 "21", "22", "23", "24", "25",
                 "26", "27", "28", "29", "30",
                 "31" };
-        private String months[]
+    public String months[]
                 = { "Jan", "Feb", "Mar", "Apr",
                 "May", "Jun", "July", "Aug",
                 "Sep", "Oct", "Nov", "Dec" };
-        private String years[]
+    public String years[]
                 = {
                 "1950", "1951", "1952", "1953",
                 "1954", "1955", "1956", "1957",
@@ -81,7 +81,7 @@ public class RegistrationFrame extends JFrame implements ActionListener {
                 "1998", "1999", "2000", "2001",
                 "2002", "2003"};
 
-        private String adminPass = "123";
+    public String adminPass = "123";
 
         // constructor, to initialize the components
         // with default values.
