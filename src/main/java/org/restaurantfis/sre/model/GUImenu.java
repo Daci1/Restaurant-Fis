@@ -11,13 +11,13 @@ import java.io.*;
 
 
 public class GUImenu extends JFrame implements ActionListener {
-    private JLabel page_title;
-    private Container menu_page;
-    private JTable menu;
-    private Object[] columns = {"FOOD", "FOOD PRICE", "DRINKS", "DRINKS PRICE"};
-    private Object[] row = new Object[4];
-    private DefaultTableModel model;
-    private JScrollPane pane;
+    public JLabel page_title;
+    public Container menu_page;
+    public JTable menu;
+    public Object[] columns = {"FOOD", "FOOD PRICE", "DRINKS", "DRINKS PRICE"};
+    public Object[] row = new Object[4];
+    public DefaultTableModel model;
+    public JScrollPane pane;
 
     public GUImenu() {
         setTitle("Restaurant Food Menu");
