@@ -12,20 +12,20 @@ import java.io.*;
 
 public class foodMenuPage extends JFrame implements ActionListener
 {
-    private JLabel page_title ;
-    private Container menu_page ;
+    public JLabel page_title ;
+    public Container menu_page ;
 
-    private JTable menu ;
+    public JTable menu ;
 
-    private Object[] columns = {"FOOD","FOOD PRICE","DRINKS","DRINKS PRICE"};
-    private Object[] row = new Object[4];
-    private DefaultTableModel model;
-    private JScrollPane pane ;
+    public Object[] columns = {"FOOD","FOOD PRICE","DRINKS","DRINKS PRICE"};
+    public Object[] row = new Object[4];
+    public DefaultTableModel model;
+    public JScrollPane pane ;
 
-    private JTextField food,food_price,drinks,drinks_price;
-    private JButton add_button, delete_button, save_button, edit_button;
+    public JTextField food,food_price,drinks,drinks_price;
+    public JButton add_button, delete_button, save_button, edit_button;
 
-    private ActionListener add_action, delete_action, save_action;
+    public ActionListener add_action, delete_action, save_action;
 
 
     public foodMenuPage()
