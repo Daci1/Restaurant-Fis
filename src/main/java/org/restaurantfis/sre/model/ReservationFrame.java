@@ -12,25 +12,25 @@ import java.time.LocalDate;
 
 public class ReservationFrame extends JFrame implements ActionListener {
 
-    private static Container c;
+    public static Container c;
 
-    private static JPanel[] transversalLines;
+    public static JPanel[] transversalLines;
 
-    private static JButton[] reservationButtons;
+    public static JButton[] reservationButtons;
 
-    private static JLabel[] timeIntervals;
+    public static JLabel[] timeIntervals;
 
-    private JComboBox reservationDate;
+    public JComboBox reservationDate;
 
-    private LocalDate currentDate;
+    public LocalDate currentDate;
 
-    private int currentMonthIndex;
+    public int currentMonthIndex;
 
-    private JLabel[] reservedLabels;
+    public JLabel[] reservedLabels;
 
-    private JButton[] deleteReservationButtons;
+    public JButton[] deleteReservationButtons;
 
-    private String dates[]
+    public String dates[]
             = { "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "10",
             "11", "12", "13", "14", "15",
@@ -39,12 +39,12 @@ public class ReservationFrame extends JFrame implements ActionListener {
             "26", "27", "28", "29", "30",
             "31" };
 
-    private String months[]
+    public String months[]
             = { "Jan", "Feb", "Mar", "Apr",
             "May", "Jun", "July", "Aug",
             "Sep", "Oct", "Nov", "Dec" };
 
-    private int tableNumber;
+    public int tableNumber;
 
     public ReservationFrame(int tableNumber){
         this.tableNumber = tableNumber + 1;
@@ -131,13 +131,13 @@ public class ReservationFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    private void setTransversalLines(JPanel panel, int yPos){
+    public void setTransversalLines(JPanel panel, int yPos){
         panel.setBackground(Color.black);
         panel.setBounds(0, yPos,800, 3);
         c.add(panel);
     }
 
-    private void setReservationButtons(JButton button, int xPos, int yPos){
+    public void setReservationButtons(JButton button, int xPos, int yPos){
         ImageIcon checkIcon = new ImageIcon("src/main/resources/photos/checkButton.png");
 
         button.setSize(103, 109);
@@ -150,7 +150,7 @@ public class ReservationFrame extends JFrame implements ActionListener {
         c.add(button);
     }
 
-    private void setTimeLabels(JLabel label, String text, int xPos, int yPos){
+    public void setTimeLabels(JLabel label, String text, int xPos, int yPos){
         label.setText(text);
         label.setFont(new Font("Arial", Font.PLAIN, 30));
         label.setForeground(Color.black);
@@ -159,11 +159,11 @@ public class ReservationFrame extends JFrame implements ActionListener {
         c.add(label);
     }
 
-    private void enableReservationButtons(){
+    public void enableReservationButtons(){
         for(int i = 0; i < 6; i++) reservationButtons[i].setEnabled(true);
     }
 
-    private void updateButtons(){
+    public void updateButtons(){
         enableReservationButtons();
         for(int i = 0; i < 6; i++){
             if(ReservationService.isReserved("Table" + this.tableNumber,
@@ -188,7 +188,7 @@ public class ReservationFrame extends JFrame implements ActionListener {
         }
     }
 
-    private void enableReservedLabel(JLabel label, int xPos, int yPos){
+    public void enableReservedLabel(JLabel label, int xPos, int yPos){
         label.setFont(new Font("Arial", Font.PLAIN, 25));
         label.setForeground(Color.black);
         label.setSize(120, 50);
@@ -239,7 +239,7 @@ public class ReservationFrame extends JFrame implements ActionListener {
         }
     }
 
-    private void setDeleteButtons(JButton button, int xPos, int yPos){
+    public void setDeleteButtons(JButton button, int xPos, int yPos){
         ImageIcon deleteIcon = new ImageIcon("src/main/resources/photos/deleteButton.jpg");
 
         button.setSize(50,50);
