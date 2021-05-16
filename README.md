@@ -37,12 +37,7 @@ If you have installed all the prerequisites, you should be able to run any of th
 ```
 mvn clean install
 ```
-If you prefer to run using the wrappers, you could also build the project using
-```
-./mvnw clean install (for Linux or MacOS)
-or 
-mvnw.cmd clean install (for Windows)
-```
+
 
 ### Open in IntelliJ IDEA
 To open the project in IntelliJ IDEA, you have to import it as a Maven project.
@@ -50,11 +45,9 @@ After you import it, in order to be able to run it, you need to set up your IDE 
 If you managed to follow all the steps from the tutorial, you should also be able to start the application by pressing the run key to the left of the Main class.
 
 ### Run the project with Maven
-The project has already been setup for Maven according to the above link.
-To start and run the project use the following command:
-* `mvn javafx:run` or `./mvnw javafx:run` (run the `run` goal of the `javafx` maven plugin)
 
-To understand better how to set up a project using JavaFX 11+ and [Maven](https://openjfx.io/openjfx-docs/#maven), please check the [official OpenJFX documentation](https://openjfx.io/).
+To start and run the project use the following command:
+* `mvn clean install`  and then press on the .jar file
 
 
 You should see an application starting, that looks like :
@@ -116,6 +109,8 @@ MongoDB was used in the [UserService.java](https://github.com/fis2021/Restaurant
 ```
 Similar methods can be found in [ReservationService.java](https://github.com/fis2021/Restaurant-Fis/blob/main/src/test/java/org/restaurantfis/sre/services/ReservationServiceTest.java) 
 
+
+**!!MongoDB is a NoSql database!!**
 ## Resources
 To understand and learn more about **Java Swing**, you can take a look at some of the following links:
 * [Getting Started with Java Swing](https://docs.oracle.com/javase/tutorial/uiswing/start/index.html)
