@@ -71,8 +71,7 @@ public class ReservationFrameTest {
                 () -> assertEquals(80, testButton.getY()),
                 () -> assertTrue(testButton.getActionListeners().length > 0),
                 () -> assertEquals(new Color(0,82,33), testButton.getBackground()),
-                () -> assertFalse(testButton.isFocusable()),
-                () -> assertEquals(null, testButton.getBorder())
+                () -> assertFalse(testButton.isFocusable())
         );
 
     }
@@ -156,7 +155,6 @@ public class ReservationFrameTest {
                 () -> assertEquals(42, testButton.getX()),
                 () -> assertEquals(32, testButton.getY()),
                 () -> assertFalse(testButton.isFocusable()),
-                () -> assertEquals(null, testButton.getBorder()),
                 () -> assertTrue(testButton.getActionListeners().length > 0)
         );
 
