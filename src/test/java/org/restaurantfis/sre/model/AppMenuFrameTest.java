@@ -5,6 +5,8 @@ import org.assertj.swing.fixture.FrameFixture;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.restaurantfis.sre.services.UserService;
+import org.restaurantfis.sre.services.UserServiceTest;
 
 import javax.swing.*;
 
@@ -14,14 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AppMenuFrameTest {
     private FrameFixture window;
-
-//    @Before
-//    public void setUp() {
-//        AppMenuFrame frame = GuiActionRunner.execute(() -> new AppMenuFrame());
-//        window = new FrameFixture(frame);
-//        window.show(); // shows the frame to test
-//    }
-
 
     @Test
     public void configButton(){
@@ -38,7 +32,7 @@ public class AppMenuFrameTest {
                 () -> assertEquals(new Dimension(100,50),testButton.getSize()),
                 () -> assertEquals(false, testButton.isFocusable()),
                 () -> assertEquals(true, testButton.getActionListeners().length > 0)
-                );
+        );
 
     }
 
@@ -62,30 +56,34 @@ public class AppMenuFrameTest {
 
     @Test
     public void restructureAfterLogin(){
+        UserService.initializeDB();
+        UserServiceTest.addTestUser();
+        UserService.validateLogin("testEmail", "testPass");
+
         AppMenuFrame frame = new AppMenuFrame();
-        frame.dispose();
-        AppMenuFrame.restructureAfterLogin();
+        frame.restructureAfterLogin();
 
         Assertions.assertAll(
-                () -> assertEquals(false, AppMenuFrame.registerButton.isVisible()),
-                () -> assertEquals(false, AppMenuFrame.loginButton.isVisible()),
-                () -> assertEquals(true, AppMenuFrame.logOutButton.isVisible()),
+                () -> assertEquals(false, frame.registerButton.isVisible()),
+                () -> assertEquals(false, frame.loginButton.isVisible()),
+                () -> assertEquals(true, frame.logOutButton.isVisible()),
 
-                () -> assertEquals("Menu", AppMenuFrame.menuButton.getText()),
-                () -> assertEquals(new Font("Arial", Font.PLAIN, 15), AppMenuFrame.menuButton.getFont()),
-                () -> assertEquals(new Dimension(100, 50), AppMenuFrame.menuButton.getSize()),
-                () -> assertEquals(0, AppMenuFrame.menuButton.getX()),
-                () -> assertEquals(0, AppMenuFrame.menuButton.getY()),
-                () -> assertEquals(false, AppMenuFrame.menuButton.isFocusable()),
+                () -> assertEquals("Menu", frame.menuButton.getText()),
+                () -> assertEquals(new Font("Arial", Font.PLAIN, 15), frame.menuButton.getFont()),
+                () -> assertEquals(new Dimension(100, 50), frame.menuButton.getSize()),
+                () -> assertEquals(0, frame.menuButton.getX()),
+                () -> assertEquals(0, frame.menuButton.getY()),
+                () -> assertEquals(false, frame.menuButton.isFocusable()),
 
-                () -> assertEquals("Contact", AppMenuFrame.contactButton.getText()),
-                () -> assertEquals(new Font("Arial", Font.PLAIN, 15), AppMenuFrame.contactButton.getFont()),
-                () -> assertEquals(new Dimension(100,50), AppMenuFrame.contactButton.getSize()),
-                () -> assertEquals(100, AppMenuFrame.contactButton.getX()),
-                () -> assertEquals(0, AppMenuFrame.contactButton.getY()),
-                () -> assertEquals(false, AppMenuFrame.contactButton.isFocusable())
+                () -> assertEquals("Contact", frame.contactButton.getText()),
+                () -> assertEquals(new Font("Arial", Font.PLAIN, 15), frame.contactButton.getFont()),
+                () -> assertEquals(new Dimension(100,50), frame.contactButton.getSize()),
+                () -> assertEquals(100, frame.contactButton.getX()),
+                () -> assertEquals(0, frame.contactButton.getY()),
+                () -> assertEquals(false, frame.contactButton.isFocusable())
         );
-
+        frame.dispose();
+        UserServiceTest.removeTestUser();
     }
 
 
