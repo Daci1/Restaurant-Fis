@@ -57,19 +57,35 @@ To start and run the project use the following command:
 To understand better how to set up a project using JavaFX 11+ and [Maven](https://openjfx.io/openjfx-docs/#maven), please check the [official OpenJFX documentation](https://openjfx.io/).
 
 
-Push the register button and register as an user(client/admin) filling the registration template which appeared after pushing the registration button
+You should see an application starting, that looks like :
 
+<img src="src/main/resources/photos/default_frame.png" width="500"/>
+
+Push the register button and register as an user(client/admin(admin password : 123)) filling the registration template which appeared after pushing the registration button
+
+<img src="src/main/resources/photos/registration_frame.png" width="500"/>
 
 
 However, if you try to register a user with the same username again, you will see an error message
+
+<img src="src/main/resources/photos/user_already_exists.png" width="500"/>
 
 
 
 ### What happened???
 
-Behind the scenes, the app actually saved the user in the database, encrypting the password. 
+Behind the scenes, the app actually saved the user in the database, encrypting the password. To see that it actually worked we need to introduce the connection string(mongodb: //localhost:27017):
 
-Also the password is saved encrypted!
+<img src="src/main/resources/photos/connection_string.png" width="500"/>
+
+And go to the users database:
+
+<img src="src/main/resources/photos/databases.png" width="500"/>
+
+You should be able to see that there is a single database entry with the username you just added. Also, please notice that the password is saved encrypted!
+
+<img src="src/main/resources/photos/account_registered.png" width="500"/>
+
 
 #### Encrypting Passwords
 Encrypting the passwords is done via the following 2 Java functions, found in [UserService.java](https://github.com/fis2021/Fit-Connect/blob/main/src/main/java/org/loose/fis/sre/services/UserService.java):
